@@ -18,8 +18,19 @@ namespace cmd_parser
 		AddOptions();
 		~AddOptions();
 		template <typename T>
-		void add_options(std::string short_option, std::string long_option, std::string short_description, std::string long_descriptionl,T val);
+		void add_options(std::string short_option, std::string long_option, std::string short_description, std::string long_descriptionl,T val);//add_options 
 	};
+	
+	
+	class ParseCmdLine :public AddOptions
+	{
+	public:
+	void display_help(int argc, char *argv[]);//display_help() shows the information about the options
+
+	
+
+	};
+
 
 }
 
