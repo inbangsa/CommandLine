@@ -26,6 +26,7 @@ namespace cmd_parser
 	{
 	public:
 	void display_help(int argc, char *argv[]);//display_help() shows the information about the options
+	void cmd_parser::ParseCmdLine::string_parser(int argc, char*argv[]);//parses the numerical arguments
 
 	
 
