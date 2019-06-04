@@ -1,3 +1,7 @@
+#include<vector>
+#include<string> 
+#include<iostream>
+
 namespace cmd_parser
 {
 	
