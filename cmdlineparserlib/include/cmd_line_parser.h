@@ -1,6 +1,10 @@
+#include<map>
+#include<unordered_map>
 #include<vector>
 #include<string> 
 #include<iostream>
+#include<algorithm>
+#include <cstdio>
 
 namespace cmd_parser
 {
