@@ -33,4 +33,11 @@ namespace cmd_parser
 		data.push_back(static_cast<std::string>(typeid(val).name()));
 
 	}
+	class ParseCmdLine :public AddOptions
+	{
+	public:
+	void display_help(int argc, char *argv[]);//default options for help 
+
+	};
+
 }
