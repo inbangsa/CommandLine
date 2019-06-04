@@ -37,6 +37,7 @@ namespace cmd_parser
 	{
 	public:
 	void display_help(int argc, char *argv[]);//default options for help 
+	void cmd_parser::ParseCmdLine::string_parser(int argc, char*argv[]);//parses the command line arguments
 
 	};
 
