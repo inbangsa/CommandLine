@@ -13,8 +13,6 @@ namespace opts
 		std::string short_command, long_command, short_description, long_description;
 
 	public:
-		//for only single long command without other arguments etc.like only port
-		Options(std::string long_command);
 		
 		// options with parameters
 		Options(std::string short_command, std::string long_command, std::string short_description, std::string  long_description);

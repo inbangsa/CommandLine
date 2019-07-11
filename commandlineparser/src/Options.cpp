@@ -8,11 +8,6 @@ std::string short_description, std::string long_description)
 	 set_option_long_command(long_command);
  }
  
-opts::Options::Options(std::string long_command):short_description(""),short_command(""),long_description("")
- { 
-	 set_option_long_command(long_command);
- }
- 
 void opts::Options::set_option_short_command(std::string short_command)
 {
 	if(!short_command.empty()){this->short_command='-'+short_command;}
