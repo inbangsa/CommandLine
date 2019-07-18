@@ -10,12 +10,18 @@ std::string short_description, std::string long_description)
  
 void cmdParser::Options::set_option_short_command(std::string short_command)
 {
-	if(!short_command.empty()){this->short_command='-'+short_command;}
+	if(!short_command.empty())
+	{
+		this->short_command='-'+short_command;
+	}
 }
 
 void cmdParser::Options::set_option_long_command(std::string long_command)
 {
-	if(!long_command.empty()){this->long_command="--"+long_command;}
+	if(!long_command.empty())
+	{
+		this->long_command="--"+long_command;
+	}
 }
 
 
