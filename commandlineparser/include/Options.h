@@ -1,10 +1,11 @@
-#include <iostream>
-#include <string>
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include <iostream>
+#include <string>
+
 //This class stores the values of various command options 
-namespace opts
+namespace cmdParser
 {
 	class Options
 	{
@@ -13,7 +14,6 @@ namespace opts
 		std::string short_command, long_command, short_description, long_description;
 
 	public:
-		
 		// options with parameters
 		Options(std::string short_command, std::string long_command, std::string short_description, std::string  long_description);
 
@@ -26,7 +26,6 @@ namespace opts
 		std::string get_option_long_command()const;
 		std::string get_option_short_description()const;
 		std::string get_option_long_description()const;
-
 	};
 };
 #endif OPTIONS_H
