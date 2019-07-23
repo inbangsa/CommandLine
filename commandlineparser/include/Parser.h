@@ -36,11 +36,15 @@ namespace cmdParser
 
 		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc, char*argv[]);
+		
+		//default help option.
+		void default_help() const;
 
 		//a map for storing command Options.
 		CommandList command_list;
 
-		//storing the tokenized data.
+		//storing the tokenized data.		
+		CommandList help_command_list;
 		std::vector<std::string> tokenized_data;
 	};
 };

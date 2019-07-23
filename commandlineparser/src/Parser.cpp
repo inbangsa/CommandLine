@@ -9,10 +9,12 @@ void cmdParser::Parser::AddOptions(std::string short_command, std::string long_c
 	if (!(obj->get_option_short_command().empty()))
 	{
 		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
+		help_command_list.insert(KeyValue(obj->get_option_short_command(), obj));
 	}
 	else
 	{
 		is_short_empty = true;
+		help_command_list.insert(KeyValue(obj->get_option_short_command(), obj));
 	}
 	if (!(obj->get_option_long_command().empty()))
 	{ 
@@ -44,5 +46,25 @@ void  cmdParser::Parser::tokenizer(int argc, char*argv[])
 bool cmdParser::Parser::Parse(int argc, char*argv[])
 {
 	tokenizer(argc,argv);
+	if (argc == 1)
+	{
+		default_help();
+		//To terminate the program.
+		std::exit(0);
+	}
 	return true;
+}
+
+void cmdParser::Parser::default_help() const
+{
+	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
+	std::cout << "[FORMAT]" << std::endl;
+	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << "Short_Description" << "\t\t" << "Long_Description" << std::endl;
+	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+	for (auto it = help_command_list.begin(); it != help_command_list.end(); ++it)
+	{
+		std::cout << "\n" << it->second->get_option_short_command() << "\t\t" << it->second->get_option_long_command() << "\t\t" << it->second->get_option_short_description() << "\t\t" << it->second->get_option_long_description() << std::endl << std::endl;
+	}
+
 }
