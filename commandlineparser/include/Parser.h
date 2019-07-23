@@ -22,22 +22,25 @@ namespace cmdParser
 	[5]. Displays the default help.
 	[6]. Generates the help whenever "-h" or "--help" command is found.
 	*/
-	class Parser 
-	{ 
+	class Parser
+	{
 	public:
-		
+
 		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
-		void add_options(std::string short_command ,std::string long_command,std::string short_description, std::string long_description);		
-		
+		void AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description);
+
 		//parses_the_input data and gives key value pair in  string type.
-		bool process_data(int argc, char*argv[]);
+		bool Parse(int argc, char*argv[]);
 
 	private:
-		
+
 		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc, char*argv[]);
 
+		//a map for storing command Options.
 		CommandList command_list;
+
+		//storing the tokenized data.
 		std::vector<std::string> tokenized_data;
 	};
 };

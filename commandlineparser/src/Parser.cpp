@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-void cmdParser::Parser::add_options(std::string short_command, std::string long_command, std::string short_description, std::string long_description) 
+void cmdParser::Parser::AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description) 
 {
 	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command, long_command, short_description, long_description);
 
@@ -22,34 +22,33 @@ void cmdParser::Parser::add_options(std::string short_command, std::string long_
 	{
 		throw std::exception("Enter a valid short or long command or both.");
 	}
-	
 }
 
 void  cmdParser::Parser::tokenizer(int argc, char*argv[])
 {
-		//converting argv to string
-		std::vector<std::string> argList;
+	//converting argv to string
+	std::vector<std::string> argList;
 
-		for (int i = 0; i < argc; i++)
+	for (int i = 0; i < argc; i++)
+	{
+		argList.push_back(argv[i]);
+	}
+
+	// to store the stringstream ss till delimiter =
+	std::string  intermediate;
+
+	//for tokenizing the input string
+	for (int i = 0; i < argc; i++)
+	{
+		std::stringstream ss(argList[i]);
+		while (getline(ss, intermediate, '='))
 		{
-			argList.push_back(argv[i]);
+			tokenized_data.push_back(intermediate);
 		}
-
-		// to store the stringstream ss till delimiter =
-		std::string  intermediate;
-
-		//for tokenizing the input string
-		for (int i = 0; i < argc; i++)
-		{
-			std::stringstream ss(argList[i]);
-			while (getline(ss, intermediate, '='))
-			{
-				tokenized_data.push_back(intermediate);
-			}
-		}		
+	}
 }
 
-bool cmdParser::Parser::process_data(int argc, char*argv[])
+bool cmdParser::Parser::Parse(int argc, char*argv[])
 {
 	tokenizer(argc,argv);
 	return true;
