@@ -42,7 +42,6 @@ namespace cmdParser
 
 		//a map for storing command Options.
 		CommandList command_list;
-
 		//storing the tokenized data.		
 		CommandList help_command_list;
 		std::vector<std::string> tokenized_data;
