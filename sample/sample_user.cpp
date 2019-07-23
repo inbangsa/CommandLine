@@ -7,6 +7,7 @@ int  main(int argc, char*argv[])
 		obj.add_options("", "port", "short description ", "very very long description");
 		obj.add_options("cp", "copy", "short description ", "very very long description");
 		obj.add_options("IP", "", "short description ", "very very long description");
+		obj.process_data(argc, argv);
 	}
 	catch (std::exception &e)
 	{
