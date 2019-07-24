@@ -41,6 +41,12 @@ namespace cmdParser
 		
 		//default help option.
 		void default_help(std::vector<std::string>& keys) const;
+		 
+		//shows short description whenever -h occurs.
+		void short_help(std::vector<std::string>& keys) const;
+
+		//shows long description whenever --help occurs.
+		void long_help(std::vector<std::string>& keys) const;
 
 		//a map for storing command Options.
 		CommandList command_list;
