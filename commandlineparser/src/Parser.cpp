@@ -1,15 +1,14 @@
 #include "Parser.h"
 
-
 void cmdParser::Parser::AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description) 
 {
-	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command,long_command,short_description, long_description);
+	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command,long_command,short_description,long_description);
 
 	bool is_short_empty =false;
 
 	if (!(obj->get_option_short_command().empty()))
 	{
-		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
+		command_list.insert(KeyValue(obj->get_option_short_command(),obj));
 	}
 	else
 	{
@@ -17,7 +16,7 @@ void cmdParser::Parser::AddOptions(std::string short_command,std::string long_co
 	}
 	if (!(obj->get_option_long_command().empty()))
 	{ 
-		command_list.insert(KeyValue(obj->get_option_long_command(), obj));
+		command_list.insert(KeyValue(obj->get_option_long_command(),obj));
 	}
 	else if (is_short_empty)
 	{
@@ -70,10 +69,9 @@ std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
 		}
 	}
 	return help_keys;
-
 }
 
-void cmdParser::Parser::default_help() 
+void cmdParser::Parser::default_help()
 {
 	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
 	std::cout << "[FORMAT]" << std::endl;
@@ -81,12 +79,12 @@ void cmdParser::Parser::default_help()
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << "Short_Description" << "\t\t" << "Long_Description" << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	
-	std::vector<std::string>  keys = help_qualifier_keys_finder();
-	
+	std::vector<std::string> keys = help_qualifier_keys_finder();
+
 	auto print = [&](const std::string target_key) 
 	{     
-		auto itr=command_list.find(target_key);
-		std::cout<<"\n"<< itr->second->get_option_short_command()<<"\t\t"<< itr->second->get_option_long_command()<<"\t\t" << itr->second->get_option_short_description()<<"\t\t"<<itr->second->get_option_long_description()<<std::endl;
+		auto itr=command_list[target_key];
+		std::cout<<"\n"<< itr->get_option_short_command()<<"\t\t"<< itr->get_option_long_command()<<"\t\t"<< itr->get_option_short_description()<<"\t\t"<<itr->get_option_long_description()<<std::endl;
 	};
 	
 	std::for_each(keys.begin(), keys.end(), print);

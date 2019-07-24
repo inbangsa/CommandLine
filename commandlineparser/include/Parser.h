@@ -27,25 +27,25 @@ namespace cmdParser
 	{
 	public:
 		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
-		void AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description);
+		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description);
 
 		//parses_the_input data and gives key value pair in  string type.
-		bool Parse(int argc, char*argv[]);
+		bool Parse(int argc,char*argv[]);
 
 	private:
 		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
-		void tokenizer(int argc, char*argv[]);
+		void tokenizer(int argc,char*argv[]);
 		
 		//default help option.
-		void default_help() ;
+		void default_help();
 
 		//to get the keys which will be used in the help option to retrive values from the command_list map.
 		std::vector<std::string> help_qualifier_keys_finder();
 
 		//a map for storing command Options.
 		CommandList command_list;
+		
 		//storing the tokenized data.		
-		CommandList help_command_list;
 		std::vector<std::string> tokenized_data;
 	};
 };
