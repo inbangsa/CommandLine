@@ -191,3 +191,4 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
+

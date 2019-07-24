@@ -39,7 +39,6 @@ namespace cmdParser
 		//to get the keys which will be used in the help option to retrive values from the command_list map.
 		std::vector<std::string> help_qualifier_keys_finder();
 
-
 		//default help option.
 		void default_help(const std::vector<std::string>& keys) const;
 
