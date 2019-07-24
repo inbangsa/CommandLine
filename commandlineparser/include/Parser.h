@@ -13,6 +13,7 @@ namespace cmdParser
 {
 	using CommandList = std::map<std::string, std::shared_ptr<cmdParser::Options>>;
 	using KeyValue = std::pair<std::string, std::shared_ptr<cmdParser::Options>>;
+
 	/*
 	class Parser serves the following purpose:-
 	[1]. Adds the user defined options.
@@ -25,7 +26,6 @@ namespace cmdParser
 	class Parser
 	{
 	public:
-
 		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
 		void AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description);
 
@@ -33,12 +33,14 @@ namespace cmdParser
 		bool Parse(int argc, char*argv[]);
 
 	private:
-
 		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc, char*argv[]);
 		
 		//default help option.
-		void default_help() const;
+		void default_help() ;
+
+		//to get the keys which will be used in the help option to retrive values from the command_list map.
+		std::vector<std::string> help_qualifier_keys_finder();
 
 		//a map for storing command Options.
 		CommandList command_list;
