@@ -26,24 +26,17 @@ void cmdParser::Parser::AddOptions(std::string short_command, std::string long_c
 
 void  cmdParser::Parser::tokenizer(int argc, char*argv[])
 {
-	//converting argv to string
-	std::vector<std::string> argList;
-
-	for (int i = 0; i < argc; i++)
-	{
-		argList.push_back(argv[i]);
-	}
-
 	// to store the stringstream ss till delimiter =
 	std::string  intermediate;
 
 	//for tokenizing the input string
 	for (int i = 0; i < argc; i++)
 	{
-		std::stringstream ss(argList[i]);
+		std::stringstream ss(argv[i]);
+
 		while (getline(ss, intermediate, '='))
 		{
-			tokenized_data.push_back(intermediate);
+	   	 tokenized_data.push_back(intermediate);
 		}
 	}
 }
