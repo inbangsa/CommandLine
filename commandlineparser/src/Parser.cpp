@@ -24,7 +24,7 @@ void cmdParser::Parser::AddOptions(std::string short_command,std::string long_co
 	}
 }
 
-void  cmdParser::Parser::tokenizer(int argc, char*argv[])
+void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 {
 	// to store the stringstream ss till delimiter =
 	std::string  intermediate;
@@ -41,7 +41,7 @@ void  cmdParser::Parser::tokenizer(int argc, char*argv[])
 	}
 }
 
-bool cmdParser::Parser::Parse(int argc,char*argv[])
+bool cmdParser::Parser::Parse(int argc,char* argv[])
 {
 	tokenizer(argc,argv);
 	
@@ -72,7 +72,7 @@ std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
 	return help_keys;
 }
 
-void cmdParser::Parser::default_help(std::vector<std::string> & keys)const
+void cmdParser::Parser::default_help(std::vector<std::string>& keys)const
 {
 	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
 	std::cout << "[FORMAT]" << std::endl;
@@ -82,8 +82,8 @@ void cmdParser::Parser::default_help(std::vector<std::string> & keys)const
 	
 	auto print = [&](const std::string target_key) 
 	{     
-		auto  itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << "\t\t" << itr->get_option_long_description() << std::endl;
+		auto itr = command_list.at(target_key);
+		std::cout<<"\n"<<itr->get_option_short_command()<<"\t\t"<<itr->get_option_long_command()<<"\t\t"<< itr->get_option_short_description()<<"\t\t"<<itr->get_option_long_description()<<std::endl;
 	};
 	
 	std::for_each(keys.begin(), keys.end(), print);

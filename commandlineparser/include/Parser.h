@@ -30,17 +30,17 @@ namespace cmdParser
 		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description);
 
 		//parses_the_input data and gives key value pair in  string type.
-		bool Parse(int argc,char*argv[]);
+		bool Parse(int argc,char* argv[]);
 
 	private:
-		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
-		void tokenizer(int argc,char*argv[]);
+		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
+		void tokenizer(int argc,char *argv[]);
 
 		//to get the keys which will be used in the help option to retrive values from the command_list map.
 		std::vector<std::string> help_qualifier_keys_finder();
 		
 		//default help option.
-		void default_help(std::vector<std::string> & keys)const;
+		void default_help(std::vector<std::string>& keys) const;
 
 		//a map for storing command Options.
 		CommandList command_list;
