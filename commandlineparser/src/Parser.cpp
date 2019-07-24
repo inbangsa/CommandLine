@@ -47,7 +47,8 @@ bool cmdParser::Parser::Parse(int argc,char*argv[])
 	
 	if (argc == 1)
 	{
-		default_help();
+		std::vector<std::string> keys = help_qualifier_keys_finder();
+		default_help(keys);
 		//To terminate the program.
 		std::exit(0);
 	}
@@ -71,7 +72,7 @@ std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
 	return help_keys;
 }
 
-void cmdParser::Parser::default_help()
+void cmdParser::Parser::default_help(std::vector<std::string> & keys)const
 {
 	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
 	std::cout << "[FORMAT]" << std::endl;
@@ -79,12 +80,10 @@ void cmdParser::Parser::default_help()
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << "Short_Description" << "\t\t" << "Long_Description" << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	
-	std::vector<std::string> keys = help_qualifier_keys_finder();
-
 	auto print = [&](const std::string target_key) 
 	{     
-		auto itr=command_list[target_key];
-		std::cout<<"\n"<< itr->get_option_short_command()<<"\t\t"<< itr->get_option_long_command()<<"\t\t"<< itr->get_option_short_description()<<"\t\t"<<itr->get_option_long_description()<<std::endl;
+		auto  itr = command_list.at(target_key);
+		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << "\t\t" << itr->get_option_long_description() << std::endl;
 	};
 	
 	std::for_each(keys.begin(), keys.end(), print);
