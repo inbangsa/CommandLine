@@ -49,11 +49,17 @@ namespace cmdParser
 		std::vector<std::string> help_qualifier_keys_finder();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		//default help option.
 		void default_help(const std::vector<std::string>& keys) const;
 
 =======
 >>>>>>> [#4]implemented default help using std::function.
+=======
+		//default help option
+		void default_help(const std::vector<std::string>& keys) const;
+		 
+>>>>>>> [#26] implemented help option for -h and --help.
 		//shows short description whenever -h occurs.
 		void short_help(const std::vector<std::string>&keys) const;
 
@@ -68,8 +74,6 @@ namespace cmdParser
 
 		// to use the object of CommandParser::Options type in the Addoptions().
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
-
-		void default_help(const std::vector<std::string>& keys) const;
 
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
