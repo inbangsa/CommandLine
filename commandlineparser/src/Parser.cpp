@@ -123,7 +123,6 @@ void cmdParser::Parser::short_help(std::vector<std::string>& keys) const
 	std::for_each(keys.begin(), keys.end(), print_short_help);
 }
 
-
 void cmdParser::Parser::long_help(std::vector<std::string>& keys) const
 {
 	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
