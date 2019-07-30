@@ -198,7 +198,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 		}
 	}
-
 }
 
 std::string cmdParser::Parser::valid_command_maker(const std::string & input)
