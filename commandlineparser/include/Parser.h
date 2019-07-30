@@ -1,6 +1,12 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+<<<<<<< HEAD
+=======
+#include<functional>
+#include <vector>
+#include <string>
+>>>>>>> [#26] implemented short and long help using std::function.
 #include <algorithm>
 <<<<<<< HEAD
 #include <functional>
@@ -47,6 +53,7 @@ namespace cmdParser
 
 		//to get the keys which will be used in the help option to retrive values from the command_list map.
 		std::vector<std::string> help_qualifier_keys_finder();
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -60,11 +67,18 @@ namespace cmdParser
 		void default_help(const std::vector<std::string>& keys) const;
 		 
 >>>>>>> [#26] implemented help option for -h and --help.
+=======
+     
+		//default help option.
+		void default_help(const std::vector<std::string>& keys) const;
+
+>>>>>>> [#26] implemented short and long help using std::function.
 		//shows short description whenever -h occurs.
 		void short_help(const std::vector<std::string>&keys) const;
 
 		//shows long description whenever --help occurs.
 		void long_help(const std::vector<std::string>&keys) const;
+<<<<<<< HEAD
 
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
@@ -74,6 +88,8 @@ namespace cmdParser
 
 		// to use the object of CommandParser::Options type in the Addoptions().
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
+=======
+>>>>>>> [#26] implemented short and long help using std::function.
 
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
