@@ -45,12 +45,14 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
+
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
 	if (argc == 1)
 	{
 		default_help(keys);
 	}
+
 
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
@@ -72,6 +74,8 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 	
 	extract_value_as_string(argc,argv);	
+
+
 
 	return true;
 
@@ -102,7 +106,6 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 
 	for_each(keys.begin(), keys.end(), print_help);
-
 }
 
 void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
@@ -116,6 +119,7 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 	
  	print(keys, print_default_help, "Short_Description \t\t Long_Description");
 }
+
 
 void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
 {
@@ -142,17 +146,17 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 {
 	//for identifying key from commandline and val is only for storing value  for the case --copy=45 =>here val=45.
-	std::string key,val;
+	std::string key, val;
 
 	for (int i = 1; i < argc; i++)
 	{
-		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)&&(!(strcmp(argv[i-1], "--help") == 0 || strcmp(argv[i-1], "-h") == 0)))
+		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
 		{
-	       //key finding  + validity checking + value next to delimiter"=" block. 
+			//key finding  + validity checking + value next to delimiter"=" block. 
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
 				std::string temp(argv[i]);
-		
+
 				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
 				if (found != std::string::npos)
@@ -165,7 +169,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				{
 					key = argv[i];
 				}
-			
+
 				//validity check for the key. 
 				if (command_list.find(key) == command_list.end())
 				{
@@ -174,7 +178,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
 				command_list[key]->clear_the_value();
-				
+
 				//store value for the case --copy=123 so key= --copy and val=123.
 				if (!val.empty())
 				{
@@ -191,4 +195,3 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
-
