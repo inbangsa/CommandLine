@@ -102,6 +102,7 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 
 	for_each(keys.begin(), keys.end(), print_help);
+
 }
 
 void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
@@ -134,6 +135,7 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 		auto itr = command_list.at(target_key);
 		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
 	};
+
 	print(keys, print_long_help,"Long_Description");
 }
 
@@ -189,4 +191,3 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
-
