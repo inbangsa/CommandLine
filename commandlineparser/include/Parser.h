@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include<functional>
 #include <sstream>
 #include <map>
 #include <stdexcept>
@@ -13,6 +14,7 @@ namespace cmdParser
 {
 	using CommandList = std::map<std::string, std::shared_ptr<cmdParser::Options>>;
 	using KeyValue = std::pair<std::string, std::shared_ptr<cmdParser::Options>>;
+
 	/*
 	class Parser serves the following purpose:-
 	[1]. Adds the user defined options.
@@ -25,22 +27,29 @@ namespace cmdParser
 	class Parser
 	{
 	public:
-
 		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
-		void AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description);
+		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description);
 
 		//parses_the_input data and gives key value pair in  string type.
-		bool Parse(int argc, char*argv[]);
+		bool Parse(int argc,char* argv[]);
 
 	private:
+		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
+		void tokenizer(int argc,char *argv[]);
 
-		//Tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
-		void tokenizer(int argc, char*argv[]);
+		//to get the keys which will be used in the help option to retrive values from the command_list map.
+		std::vector<std::string> help_qualifier_keys_finder();
+		
+		//default help option.
+		void default_help(const std::vector<std::string>& keys) const;
 
+		//to print the common portion in the help option and std::function to print various types of help.
+		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
+		
 		//a map for storing command Options.
 		CommandList command_list;
-
-		//storing the tokenized data.
+		
+		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 	};
 };

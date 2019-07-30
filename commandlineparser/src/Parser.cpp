@@ -1,14 +1,14 @@
 #include "Parser.h"
 
-void cmdParser::Parser::AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description) 
+void cmdParser::Parser::AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description) 
 {
-	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command, long_command, short_description, long_description);
+	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command,long_command,short_description,long_description);
 
 	bool is_short_empty =false;
 
 	if (!(obj->get_option_short_command().empty()))
 	{
-		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
+		command_list.insert(KeyValue(obj->get_option_short_command(),obj));
 	}
 	else
 	{
@@ -16,7 +16,7 @@ void cmdParser::Parser::AddOptions(std::string short_command, std::string long_c
 	}
 	if (!(obj->get_option_long_command().empty()))
 	{ 
-		command_list.insert(KeyValue(obj->get_option_long_command(), obj));
+		command_list.insert(KeyValue(obj->get_option_long_command(),obj));
 	}
 	else if (is_short_empty)
 	{
@@ -24,7 +24,7 @@ void cmdParser::Parser::AddOptions(std::string short_command, std::string long_c
 	}
 }
 
-void  cmdParser::Parser::tokenizer(int argc, char*argv[])
+void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 {
 	// to store the stringstream ss till delimiter =
 	std::string  intermediate;
@@ -41,8 +41,53 @@ void  cmdParser::Parser::tokenizer(int argc, char*argv[])
 	}
 }
 
-bool cmdParser::Parser::Parse(int argc, char*argv[])
+bool cmdParser::Parser::Parse(int argc,char* argv[])
 {
 	tokenizer(argc,argv);
+	
+	std::vector<std::string> keys = help_qualifier_keys_finder();
+	if (argc == 1)
+	{
+		default_help(keys);
+	}
 	return true;
+}
+
+std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
+{
+	std::vector<std::string> help_keys;
+	for (auto x : command_list)
+	{
+		if ((x.first.at(0) == '-') && (x.first.at(1) == '-'))
+		{
+			help_keys.push_back(x.first);
+		}
+		else if (x.second->get_option_long_command().empty())
+		{
+			help_keys.push_back(x.first);
+		}
+	}
+	return help_keys;
+}
+
+void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const
+{
+	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
+	std::cout << "[FORMAT]" << std::endl;
+	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
+	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+	for_each(keys.begin(), keys.end(), print_help);
+
+}
+
+void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
+{
+	auto print_default_help = [&](const std::string target_key)
+	{
+		auto itr = command_list.at(target_key);
+		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << "\t\t" << itr->get_option_long_description() << std::endl;
+	};
+
+	print(keys, print_default_help, "Short_Description \t\t Long_Description");
 }
