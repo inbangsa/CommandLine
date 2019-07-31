@@ -42,7 +42,7 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 }
 
 bool cmdParser::Parser::Parse(int argc,char* argv[])
-{   
+{
 	//begin of tokenizer.
 	tokenizer(argc,argv);
 	
@@ -54,20 +54,20 @@ bool cmdParser::Parser::Parse(int argc,char* argv[])
 	}
 
 	// display short and long help.
-	auto detect_minus_minus_help = std::find(tokenized_data.begin(), tokenized_data.end(), "--help");
+	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
+	{
+		
+		auto detect_help_option = std::find(tokenized_data.begin(), tokenized_data.end(), option);
 
-	if (detect_minus_minus_help != tokenized_data.end())
-	{
-		long_help(keys);
-	}
-	else
-	{
-		auto detect_minus_h = std::find(tokenized_data.begin(), tokenized_data.end(), "-h");
-		if (detect_minus_h != tokenized_data.end())
+		if (detect_help_option != tokenized_data.end())
 		{
-			short_help(keys);
+			help_function(keys);
 		}
-	}
+	};
+
+	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+	
 	return true;
 }
 
@@ -130,4 +130,3 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 
 	print(keys, print_long_help,"Long_Description");
 }
-
