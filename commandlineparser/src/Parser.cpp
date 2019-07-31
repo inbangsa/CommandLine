@@ -43,13 +43,31 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc,char* argv[])
 {
+	//begin of tokenizer.
 	tokenizer(argc,argv);
 	
 	std::vector<std::string> keys = help_qualifier_keys_finder();
+
 	if (argc == 1)
 	{
 		default_help(keys);
 	}
+
+	// display short and long help.
+	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
+	{
+		
+		auto detect_help_option = std::find(tokenized_data.begin(), tokenized_data.end(), option);
+
+		if (detect_help_option != tokenized_data.end())
+		{
+			help_function(keys);
+		}
+	};
+
+	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+	
 	return true;
 }
 
@@ -78,7 +96,6 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	for_each(keys.begin(), keys.end(), print_help);
-
 }
 
 void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
@@ -90,4 +107,26 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 	};
 
 	print(keys, print_default_help, "Short_Description \t\t Long_Description");
+}
+
+void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
+{
+	auto print_short_help = [&](const std::string target_key)
+	{
+		auto itr = command_list.at(target_key);
+		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
+	};
+
+	print(keys, print_short_help,"Short_Description");
+}
+
+void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
+{
+	auto print_long_help = [&](const std::string target_key)
+	{
+		auto itr = command_list.at(target_key);
+		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
+	};
+
+	print(keys, print_long_help,"Long_Description");
 }
