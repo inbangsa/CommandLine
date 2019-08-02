@@ -1,5 +1,6 @@
 #include "Options.h" 
 
+
 void cmdParser::Options::set_option_short_command(std::string short_command)
 {
 	if (!short_command.empty())

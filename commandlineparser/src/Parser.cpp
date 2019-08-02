@@ -41,6 +41,7 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
+
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 	
@@ -101,6 +102,7 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+
 	for_each(keys.begin(), keys.end(), print_help);
 
 }
@@ -118,8 +120,6 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 
 
 }
-
-<<<<<<< HEAD
 
 void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
 {
@@ -222,18 +222,13 @@ void cmdParser::Parser::short_help(std::vector<std::string>& keys) const
 	std::cout << "Short_Command"<<"\t" << "Long_Command" << "\t" << "Short_Description" << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	
-=======
-
-void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
-{
->>>>>>> [#26] implemented short and long help using std::function.
 	auto print_short_help = [&](const std::string target_key)
 	{
 		auto itr = command_list.at(target_key);
 		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
 	};
+   print(keys, print_short_help,"Short_Description");
 
-	print(keys, print_short_help,"Short_Description");
 }
 
 void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
