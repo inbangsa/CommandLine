@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include<functional>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -11,12 +10,13 @@
 #include <stdexcept>
 #include<tuple>
 #include "Options.h"
+#include <stdio.h>
 
 namespace cmdParser
 {
 	using CommandList = std::map<std::string, std::shared_ptr<cmdParser::Options>>;
 	using KeyValue = std::pair<std::string, std::shared_ptr<cmdParser::Options>>;
-
+	using StorgeType = std::map<std::string, std::vector<std::string>>;
 	/*
 	class Parser serves the following purpose:-
 	[1]. Adds the user defined options.
@@ -34,7 +34,7 @@ namespace cmdParser
 
 		//parses_the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
-
+		StorgeType ValueAsString;
 	private:
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc,char *argv[]);
@@ -54,11 +54,20 @@ namespace cmdParser
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
+		// to validate the input commands with the registered opions.
+		void validity_checker(int argc, char*argv[]);
+
+		//to the store the corresponding value of input commands obtained by the commandline
+		void store_as_string(int argc, char**argv);
+
 		//a map for storing command Options.
 		CommandList command_list;
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
+
+		std::map<std::string, int> store_commands;
+
 	};
 };
 #endif PARSER_H
