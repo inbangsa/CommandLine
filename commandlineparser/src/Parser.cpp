@@ -2,7 +2,7 @@
 
 void cmdParser::Parser::AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description) 
 {
-	std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command,long_command,short_description,long_description);
+    std::shared_ptr<cmdParser::Options> obj = std::make_shared<cmdParser::Options>(short_command,long_command,short_description,long_description);
 
 	bool is_short_empty =false;
 
@@ -41,11 +41,12 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-bool cmdParser::Parser::Parse(int argc,char* argv[])
+bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
+
 	//begin of tokenizer.
-	tokenizer(argc,argv);
-	
+	tokenizer(argc, argv);
+
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
 	if (argc == 1)
@@ -56,7 +57,6 @@ bool cmdParser::Parser::Parse(int argc,char* argv[])
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
 	{
-		
 		auto detect_help_option = std::find(tokenized_data.begin(), tokenized_data.end(), option);
 
 		if (detect_help_option != tokenized_data.end())
@@ -67,7 +67,9 @@ bool cmdParser::Parser::Parse(int argc,char* argv[])
 
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
-	
+
+	validity_checker(argc, argv);
+	store_as_string(argc, argv);
 	return true;
 }
 
@@ -95,6 +97,7 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+
 	for_each(keys.begin(), keys.end(), print_help);
 }
 
@@ -116,8 +119,8 @@ void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
 		auto itr = command_list.at(target_key);
 		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
 	};
+   print(keys, print_short_help,"Short_Description");
 
-	print(keys, print_short_help,"Short_Description");
 }
 
 void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
@@ -130,3 +133,77 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 
 	print(keys, print_long_help,"Long_Description");
 }
+
+void cmdParser::Parser::validity_checker(int argc, char *argv[])
+{
+	for (int i = 0; i < argc; i++)
+	{
+		if (argv[i][0] == '-' || argv[i][1] == '-')
+		{
+			std::stringstream ss(argv[i]);
+			std::string temp;
+			getline(ss, temp, '=');
+
+			//std::cout << temp << std::endl;
+			
+			if (command_list.find(temp) == command_list.end())
+			{
+				throw std::exception("Entered command not found in the registered command list");
+			}
+			
+			if (store_commands.find(temp) != store_commands.end())
+			{
+				store_commands.erase(temp);
+				//store_commands.insert({ temp, i });
+				store_commands.insert({ temp, i});
+			}
+			else 
+			{
+				store_commands.insert({ temp, i });
+			}
+		}
+	}
+}
+
+void cmdParser::Parser::store_as_string(int argc, char**argv)
+{
+	std::string key;
+	for (int i = 1; i <argc; i++)
+	{
+		if (argv[i][0] == '-'|| argv[i][1] == '-')
+		{
+			std::string temp(argv[i]);
+			size_t found = temp.find("=");
+			if (found != std::string::npos)
+			{
+				key = temp.substr(0, temp.find("="));
+				std::string val = temp.substr(temp.find("=") +1);
+				
+				//to remove the old value for already existing key.
+				if (ValueAsString.find(key) != ValueAsString.end())
+				{
+					ValueAsString.erase(key);
+				}
+			
+				//store for the case --copy=123 so key= --copy and val=123.
+				ValueAsString[key].push_back(val);
+			}
+			else //if  only key is there.Example  -cp 142 no '='
+			{ 
+				key = argv[i];
+			}	
+		}
+		else //for only data no key. --copy 152 123 25 store such values 152 123 25
+		{	
+			ValueAsString[key].push_back(argv[i]);
+		}
+		if (ValueAsString.find(key)== ValueAsString.end())
+		{
+			//std::cout << "key is here:" << key;
+			ValueAsString[key].push_back("true");
+		}
+	}
+}
+
+
+
