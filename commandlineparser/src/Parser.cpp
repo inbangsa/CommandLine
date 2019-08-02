@@ -2,6 +2,7 @@
 
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
+
 	bool is_short_empty = false;
 
 	if (!(obj->get_option_short_command().empty()))
@@ -39,9 +40,10 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-
+<
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
+
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
@@ -72,10 +74,9 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+
 	
 	extract_value_as_string(argc,argv);	
-
-
 
 	return true;
 
@@ -142,6 +143,7 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 
 	print(keys, print_long_help,"Long_Description");
 }
+
 
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 {

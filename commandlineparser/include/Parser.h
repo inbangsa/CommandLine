@@ -1,12 +1,18 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+<<<<<<< HEAD
+=======
+#include <vector>
+#include <string>
+>>>>>>> [#24] initial commit.
 #include <algorithm>
 #include <functional>
 #include <sstream>
 #include <map>
 #include <stdexcept>
 #include "Options.h"
+#include <stdio.h>
 
 namespace cmdParser
 {
@@ -31,7 +37,7 @@ namespace cmdParser
 
 		//parses_the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
-
+		StorgeType ValueAsString;
 	private:
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc,char *argv[]);
@@ -51,7 +57,6 @@ namespace cmdParser
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
-
 		//to the store the corresponding value of input commands obtained by the commandline.
 		void extract_value_as_string(int argc, char**argv);
 		
@@ -63,6 +68,9 @@ namespace cmdParser
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
+
+		std::map<std::string, int> store_commands;
+
 	};
 
 	template <typename T>
