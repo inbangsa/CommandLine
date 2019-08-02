@@ -7,6 +7,7 @@
 #include <map>
 #include <stdexcept>
 #include "Options.h"
+#include <stdio.h>
 
 namespace cmdParser
 {
@@ -29,18 +30,15 @@ namespace cmdParser
 		template<typename T>
 		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description, T def_value);
 
-		//parses_the_input data and gives key value pair in  string type.
+		//parses the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
 		
 		//to get the string type value of the queried command.
 		template<typename U>
 		std::vector<U>GetValue(const std::string &)const;
 
-
-		//to get the string type value of the queried command.
-		std::vector<std::string> getValueAsString(const std::string &)const;
-
 	private:
+
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc,char *argv[]);
 
@@ -59,6 +57,7 @@ namespace cmdParser
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
+
 		//to the store the corresponding value of input commands obtained by the commandline.
 		void extract_value_as_string(int argc, char**argv);
 
@@ -72,9 +71,6 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 
-		//a map to store command and corresponding value in string format.
-		StorgeType ValueAsString;
-
 	};
 
 	template <typename T>
@@ -83,7 +79,6 @@ namespace cmdParser
 		static_assert(!std::is_convertible<T, const char *>::value, "const char * data type for string literal is not supported in this version !");
 		std::shared_ptr<cmdParser::Options> obj = std::make_shared <cmdParser::Options_with_value<T>>(short_command, long_command, short_description, long_description, def_value);
 		add_options_object(obj);
-		
 	}
 
 	template<typename U>

@@ -2,9 +2,14 @@
 
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
+<<<<<<< HEAD
 
 	bool is_short_empty = false;
+=======
+>>>>>>> [#24] initial commit.
 
+	bool is_short_empty = false;
+    
 	if (!(obj->get_option_short_command().empty()))
 	{
 		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
@@ -40,9 +45,9 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
+
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
@@ -76,7 +81,13 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		
 	extract_value_as_string(argc,argv);	
 
+<<<<<<< HEAD
 return true;
+=======
+
+	
+	return true;
+>>>>>>> [#24] initial commit.
 
 }
 std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()

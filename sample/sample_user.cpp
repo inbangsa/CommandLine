@@ -15,11 +15,12 @@ int  main(int argc, char*argv[])
 		{
 			std::cout << y;
 		}
-			auto z=obj.GetValue<int>("--port");
-			for (auto y : z)
-			{
+		
+		auto z=obj.GetValue<int>("--port");
+		for (auto y : z)
+		{
 				std::cout << y;
-			}
+		}
 
 	}
 	catch (std::exception &e)
