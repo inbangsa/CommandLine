@@ -39,6 +39,7 @@ namespace cmdParser
 
 	private:
 		//different parameters of the options. 
+
 		std::string short_command,long_command,short_description,long_description,default_value;
 
 		//to store the value of command.

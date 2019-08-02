@@ -3,7 +3,7 @@
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
 	bool is_short_empty = false;
-    
+
 	if (!(obj->get_option_short_command().empty()))
 	{
 		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
@@ -39,36 +39,24 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-<<<<<<< HEAD
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
 	//begin of tokenizer.
 	tokenizer(argc, argv);
-
-=======
-bool cmdParser::Parser::Parse(int argc,char* argv[])
-{   
-	//begin of tokenizer.
-	tokenizer(argc,argv);
 	
->>>>>>> [#26] implemented short and long help using std::function.
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
 	if (argc == 1)
 	{
 		default_help(keys);
 	}
-<<<<<<< HEAD
-=======
 
 	// display short and long help.
 	auto detect_minus_minus_help = std::find(tokenized_data.begin(), tokenized_data.end(), "--help");
->>>>>>> [#26] implemented short and long help using std::function.
 
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
 	{
-<<<<<<< HEAD
 		auto detect_help_option = std::find(tokenized_data.begin(), tokenized_data.end(), option);
 
 		if (detect_help_option != tokenized_data.end())
@@ -86,19 +74,6 @@ bool cmdParser::Parser::Parse(int argc,char* argv[])
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
-
-=======
-		long_help(keys);
-	}
-	else
-	{
-		auto detect_minus_h = std::find(tokenized_data.begin(), tokenized_data.end(), "-h");
-		if (detect_minus_h != tokenized_data.end())
-		{
-			short_help(keys);
-		}
-	}
->>>>>>> [#26] implemented short and long help using std::function.
 	return true;
 
 }
@@ -126,16 +101,9 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-<<<<<<< HEAD
 
 	for_each(keys.begin(), keys.end(), print_help);
-=======
-	for_each(keys.begin(), keys.end(), print_help);
-<<<<<<< HEAD
 
->>>>>>> [#4]implemented default help using std::function.
-=======
->>>>>>> [#26] implemented short and long help using std::function.
 }
 
 void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
@@ -152,7 +120,6 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 
 }
 
-<<<<<<< HEAD
 
 void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
 {
@@ -172,7 +139,6 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 		auto itr = command_list.at(target_key);
 		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
 	};
-<<<<<<< HEAD
 
 	print(keys, print_long_help,"Long_Description");
 }
@@ -231,41 +197,8 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 			}
 		}
 	}
-=======
-	std::for_each(keys.begin(), keys.end(), print_long_help);
->>>>>>> [#4]implemented default help using std::function.
+
 }
 
-void cmdParser::Parser::short_help(std::vector<std::string>& keys) const
-{
-	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
-	std::cout << "[FORMAT]" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Short_Command"<<"\t" << "Long_Command" << "\t" << "Short_Description" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	
-=======
 
-void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
-{
->>>>>>> [#26] implemented short and long help using std::function.
-	auto print_short_help = [&](const std::string target_key)
-	{
-		auto itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
-	};
-
-	print(keys, print_short_help,"Short_Description");
-}
-
-void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
-{
-	auto print_long_help = [&](const std::string target_key)
-	{
-		auto itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
-	};
-
-	print(keys, print_long_help,"Long_Description");
-}
 
