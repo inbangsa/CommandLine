@@ -23,12 +23,6 @@ int  main(int argc, char*argv[])
 		{
 			std::cout << " " << x << " ";
 		}
-		//example 3
-		auto val3 = obj.getValueAsString("--cow");
-		for (auto x : val3)
-		{
-			std::cout << " " << x << " ";
-		}
 	}
 	catch (std::exception &e)
 	{
