@@ -70,21 +70,11 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		}
 	};
 
-<<<<<<< HEAD
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
-=======
-	bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
-	bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 
-	if (called_help_1 == 0 && called_help_2 == 0)
-	{
-		validity_checker(argc, argv);
-		store_as_string(argc, argv);
-	}
->>>>>>> [#24] implemented getValueAsString function and updated the code as per as comments.
 	return true;
 
 }
@@ -210,6 +200,4 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 		}
 	}
-
-}
 
