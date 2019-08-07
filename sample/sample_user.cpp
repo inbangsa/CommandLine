@@ -9,6 +9,7 @@ int  main(int argc, char*argv[])
 		obj.AddOptions("", "port", "short description ", "very very long description",4528);
 	    
 		obj.Parse(argc, argv);
+
 		auto x=obj.GetValue<std::string>("copy");
 		for (auto y : x)
 		{

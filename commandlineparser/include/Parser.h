@@ -33,6 +33,7 @@ namespace cmdParser
 		bool Parse(int argc,char* argv[]);
 		
 		//to get the string type value of the queried command.
+
 		template<typename U>
 		std::vector<U>GetValue(const std::string&);
 

@@ -150,7 +150,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 	for (int i = 1; i < argc; i++)
 	{
-
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
 
 		{
@@ -189,13 +188,11 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				}
 
 			}
-
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
 			else
 			{
 				command_list[key]->set_value(std::string(argv[i]));
 			}
-
 		}
 	}
 }
@@ -213,4 +210,5 @@ std::string cmdParser::Parser::valid_command_maker(const std::string & input)
 	}
 	else return "";
 }
+	
 
