@@ -36,6 +36,7 @@ namespace cmdParser
 		template<typename U>
 		std::vector<U>GetValue(const std::string &)const;
 
+
 	private:
 
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
@@ -68,12 +69,6 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 
-<<<<<<< HEAD
-=======
-		//A map to store command and corresponding  
-		StorgeType ValueAsString;
-
->>>>>>> [#24] implemented getValueAsString function to retrieve the value and made other changes as per as comments.
 	};
 
 	template <typename T>

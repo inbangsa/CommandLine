@@ -19,7 +19,7 @@ int  main(int argc, char*argv[])
 		auto z=obj.GetValue<int>("--port");
 		for (auto y : z)
 		{
-				std::cout << y;
+			std::cout << y;
 		}
 	}
 	catch (std::exception &e)
