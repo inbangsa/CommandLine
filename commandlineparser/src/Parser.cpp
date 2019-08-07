@@ -74,6 +74,7 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
+
 	return true;
 
 }
