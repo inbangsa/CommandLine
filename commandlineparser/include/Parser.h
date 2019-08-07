@@ -33,7 +33,7 @@ namespace cmdParser
 		//parses_the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
 
-		//to get the string value of query command.
+		//to get the string type value of the queried command.
 		std::vector<std::string> getValueAsString(const std::string &);
 
 	private:

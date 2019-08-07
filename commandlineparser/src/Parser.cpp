@@ -71,8 +71,8 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		}
 	};
 
-bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
-bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+	bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+	bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 
 
 	
