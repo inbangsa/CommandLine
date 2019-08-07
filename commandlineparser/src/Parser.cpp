@@ -69,14 +69,12 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		}
 	};
 
-	bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
-	bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
-
-	if (called_help_1 == 0 && called_help_2 == 0)
-	{
-		validity_checker(argc, argv);
-		store_as_string(argc, argv);
-	}
+	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+	
+	validity_checker(argc, argv);
+	store_as_string(argc, argv);
+	
 	return true;
 }
 
@@ -147,16 +145,18 @@ void cmdParser::Parser::validity_checker(int argc, char *argv[])
 
 	for (int i = 0; i < argc; i++)
 	{
-		if (argv[i][0] == '-' || argv[i][1] == '-')
+		if (strcmp(argv[i],"--help")==0 && strcmp(argv[i],"-h")==0)
 		{
+			if (argv[i][0] == '-' || argv[i][1] == '-')
+			{
 				std::stringstream ss(argv[i]);
 				std::string temp;
 				getline(ss, temp, '=');
-
 				if (command_list.find(temp) == command_list.end())
 				{
-					throw std::exception("Entered command not found in the registered command list");
+					throw std::exception("Entered command not found in the registered command list.");
 				}
+
 				//to conider only the last command for verification among all the same commands present in command line with registered options.		
 				if (store_commands.find(temp) != store_commands.end())
 				{
@@ -167,6 +167,7 @@ void cmdParser::Parser::validity_checker(int argc, char *argv[])
 				{
 					store_commands.insert({ temp, i });
 				}
+			}
 		}
 	}	
 }
@@ -174,38 +175,38 @@ void cmdParser::Parser::validity_checker(int argc, char *argv[])
 void cmdParser::Parser::store_as_string(int argc, char**argv)
 {
 	std::string key;
-	for (int i = 1; i <argc; i++)
+	for (int i = 1; i < argc; i++)
 	{
-		if (argv[i][0] == '-'|| argv[i][1] == '-')
+		if (argv[i][0] == '-' || argv[i][1] == '-')
 		{
 			std::string temp(argv[i]);
 			size_t found = temp.find("=");
 			if (found != std::string::npos)
 			{
 				key = temp.substr(0, temp.find("="));
-				std::string val = temp.substr(temp.find("=") +1);
-				
+				std::string val = temp.substr(temp.find("=") + 1);
+
 				//to remove the old value for already existing key.
 				if (ValueAsString.find(key) != ValueAsString.end())
 				{
 					ValueAsString.erase(key);
 				}
-			
+
 				//store for the case --copy=123 so key= --copy and val=123.
 				ValueAsString[key].push_back(val);
 			}
 			//if  only key is there.Example  -cp 142 no '='.
-			else 
-			{ 
+			else
+			{
 				key = argv[i];
-			}	
+			}
 		}
 		//for only data no key. --copy 152 123 25 store such values 152 123 25.
-		else 
-		{	
+		else
+		{
 			ValueAsString[key].push_back(argv[i]);
 		}
-		if (ValueAsString.find(key)== ValueAsString.end())
+		if (ValueAsString.find(key) == ValueAsString.end())
 		{
 			//std::cout << "key is here:" << key;
 			ValueAsString[key].push_back("true");
@@ -213,15 +214,16 @@ void cmdParser::Parser::store_as_string(int argc, char**argv)
 	}
 }
 
-std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string &  input)
+std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string &  input)const
 {
 	if (ValueAsString.find(input) != ValueAsString.end())
 	{
-		return ValueAsString[input];
+		return ValueAsString.at(input);
 	}
-	else 
+	else
 	{
 		throw std::exception("The value of quried command not found . ! ");
 	}
 }
+	
 

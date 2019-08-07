@@ -11,13 +11,13 @@ int  main(int argc, char*argv[])
 		obj.AddOptions("D", "", "short description ", "very very long description");
 		obj.AddOptions("IP", "", "short description ", "very very long description");
 		obj.Parse(argc, argv);
-		//example1
+		//example1 for querying value for  the command.
 		auto val1=obj.getValueAsString("--port");
 		for (auto x : val1)
 		{
 			std::cout <<" "<< x << " ";
 		}
-		//example 2
+		//example 2 for querying value for  the command.
 		auto val2 = obj.getValueAsString("--copy");
 		for (auto x : val2)
 		{
