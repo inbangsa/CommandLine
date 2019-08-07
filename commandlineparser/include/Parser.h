@@ -7,7 +7,6 @@
 #include <map>
 #include <stdexcept>
 #include "Options.h"
-#include <stdio.h>
 
 namespace cmdParser
 {

@@ -41,7 +41,6 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
-
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 	
@@ -212,33 +211,5 @@ std::string cmdParser::Parser::valid_command_maker(const std::string & input)
 
 	}
 	else return "";
-}
-
-void cmdParser::Parser::short_help(std::vector<std::string>& keys) const
-{
-	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
-	std::cout << "[FORMAT]" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Short_Command"<<"\t" << "Long_Command" << "\t" << "Short_Description" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	
-	auto print_short_help = [&](const std::string target_key)
-	{
-		auto itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
-	};
-   print(keys, print_short_help,"Short_Description");
-
-}
-
-void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
-{
-	auto print_long_help = [&](const std::string target_key)
-	{
-		auto itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
-	};
-
-	print(keys, print_long_help,"Long_Description");
 }
 

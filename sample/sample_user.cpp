@@ -19,6 +19,7 @@ int  main(int argc, char*argv[])
 		for (auto y : z)
 		{
 				std::cout << y;
+
 		}
 	}
 	catch (std::exception &e)
