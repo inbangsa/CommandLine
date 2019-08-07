@@ -43,7 +43,6 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
-
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
@@ -62,14 +61,22 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		if (detect_help_option != tokenized_data.end())
 		{
 			help_function(keys);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	};
 
-	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
-	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 
-	validity_checker(argc, argv);
-	store_as_string(argc, argv);
+	if (called_help_1 == 0 && called_help_2 == 0)
+	{
+		validity_checker(argc, argv);
+		store_as_string(argc, argv);
+	}
 	return true;
 }
 
@@ -135,34 +142,33 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 }
 
 void cmdParser::Parser::validity_checker(int argc, char *argv[])
-{
+{   //to store only commands extracted from command line for  the validity check with the registered options.
+	std::map<std::string, int> store_commands;
+
 	for (int i = 0; i < argc; i++)
 	{
 		if (argv[i][0] == '-' || argv[i][1] == '-')
 		{
-			std::stringstream ss(argv[i]);
-			std::string temp;
-			getline(ss, temp, '=');
+				std::stringstream ss(argv[i]);
+				std::string temp;
+				getline(ss, temp, '=');
 
-			//std::cout << temp << std::endl;
-			
-			if (command_list.find(temp) == command_list.end())
-			{
-				throw std::exception("Entered command not found in the registered command list");
-			}
-			
-			if (store_commands.find(temp) != store_commands.end())
-			{
-				store_commands.erase(temp);
-				//store_commands.insert({ temp, i });
-				store_commands.insert({ temp, i});
-			}
-			else 
-			{
-				store_commands.insert({ temp, i });
-			}
+				if (command_list.find(temp) == command_list.end())
+				{
+					throw std::exception("Entered command not found in the registered command list");
+				}
+				//to conider only the last command for verification among all the same commands present in command line with registered options.		
+				if (store_commands.find(temp) != store_commands.end())
+				{
+					store_commands.erase(temp);
+					store_commands.insert({ temp, i });
+				}
+				else
+				{
+					store_commands.insert({ temp, i });
+				}
 		}
-	}
+	}	
 }
 
 void cmdParser::Parser::store_as_string(int argc, char**argv)
@@ -188,12 +194,14 @@ void cmdParser::Parser::store_as_string(int argc, char**argv)
 				//store for the case --copy=123 so key= --copy and val=123.
 				ValueAsString[key].push_back(val);
 			}
-			else //if  only key is there.Example  -cp 142 no '='
+			//if  only key is there.Example  -cp 142 no '='.
+			else 
 			{ 
 				key = argv[i];
 			}	
 		}
-		else //for only data no key. --copy 152 123 25 store such values 152 123 25
+		//for only data no key. --copy 152 123 25 store such values 152 123 25.
+		else 
 		{	
 			ValueAsString[key].push_back(argv[i]);
 		}
@@ -205,5 +213,15 @@ void cmdParser::Parser::store_as_string(int argc, char**argv)
 	}
 }
 
-
+std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string &  input)
+{
+	if (ValueAsString.find(input) != ValueAsString.end())
+	{
+		return ValueAsString[input];
+	}
+	else 
+	{
+		throw std::exception("The value of quried command not found . ! ");
+	}
+}
 
