@@ -171,8 +171,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				}
 				//if  only key is there.Example  -cp 142 no '='.
 				else
-
-
 				{
 					key = argv[i];
 				}
@@ -182,16 +180,17 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				{
 					throw std::exception(("Entered command [ " + key + " ] not found in the registered command list.").c_str());
 				}
+
 				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
 				command_list[key]->clear_the_value();
 
 				//store value for the case --copy=123 so key= --copy and val=123.
 				if (!val.empty())
-
 				{
 					command_list[key]->set_value(val);
 					val.clear();
 				}
+
 			}
 
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
