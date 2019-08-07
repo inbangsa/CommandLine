@@ -2,12 +2,6 @@
 
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
-<<<<<<< HEAD
-
-	bool is_short_empty = false;
-=======
->>>>>>> [#24] initial commit.
-
 	bool is_short_empty = false;
     
 	if (!(obj->get_option_short_command().empty()))
@@ -47,7 +41,6 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
-
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
@@ -75,19 +68,13 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 			return false;
 		}
 	};
-	
+
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
 
-<<<<<<< HEAD
-return true;
-=======
-
-	
 	return true;
->>>>>>> [#24] initial commit.
 
 }
 std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
@@ -163,6 +150,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 	std::string key, val;
 
 	for (int i = 1; i < argc; i++)
+
 	{
 
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
@@ -194,7 +182,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				{
 					throw std::exception(("Entered command [ " + key + " ] not found in the registered command list.").c_str());
 				}
-
 				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
 				command_list[key]->clear_the_value();
 
@@ -215,4 +202,3 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
-
