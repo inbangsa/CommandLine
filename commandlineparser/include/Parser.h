@@ -1,18 +1,13 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-<<<<<<< HEAD
-=======
-#include <vector>
-#include <string>
->>>>>>> [#24] initial commit.
+
 #include <algorithm>
 #include <functional>
 #include <sstream>
 #include <map>
 #include <stdexcept>
 #include "Options.h"
-#include <stdio.h>
 
 namespace cmdParser
 {
@@ -37,7 +32,10 @@ namespace cmdParser
 
 		//parses_the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
-		StorgeType ValueAsString;
+
+		//to get the string value of query command.
+		std::vector<std::string> getValueAsString(const std::string &);
+
 	private:
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc,char *argv[]);
@@ -69,7 +67,8 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 
-		std::map<std::string, int> store_commands;
+		//A map to store command and corresponding  
+		StorgeType ValueAsString;
 
 	};
 

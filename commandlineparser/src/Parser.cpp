@@ -40,10 +40,9 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-<
+
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
-
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
@@ -72,13 +71,14 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		}
 	};
 
-	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
-	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+bool called_help_1=call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+bool called_help_2=call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+
 
 	
 	extract_value_as_string(argc,argv);	
 
-	return true;
+return true;
 
 }
 std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
