@@ -31,16 +31,10 @@ namespace cmdParser
 
 		//parses the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
-<<<<<<< HEAD
 		
 		//to get the string type value of the queried command.
 		template<typename U>
 		std::vector<U>GetValue(const std::string &)const;
-=======
-
-		//to get the string value of query command.
-		std::vector<std::string> getValueAsString(const std::string &);
->>>>>>> [#24] implemented getValueAsString function to retrieve the value and made other changes as per as comments.
 
 	private:
 
@@ -62,11 +56,9 @@ namespace cmdParser
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
-
 		//to the store the corresponding value of input commands obtained by the commandline.
 		void extract_value_as_string(int argc, char**argv);
 
-		
 		// to use the object of CommandParser::Options type in the Addoptions().
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
 
@@ -76,12 +68,6 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 
-<<<<<<< HEAD
-=======
-		//A map to store command and corresponding  
-		StorgeType ValueAsString;
-
->>>>>>> [#24] implemented getValueAsString function to retrieve the value and made other changes as per as comments.
 	};
 
 	template <typename T>
