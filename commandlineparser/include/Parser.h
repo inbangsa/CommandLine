@@ -1,8 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <vector>
-#include <string>
 #include <algorithm>
 #include<functional>
 #include <sstream>
@@ -58,7 +56,7 @@ namespace cmdParser
 		// to validate the input commands with the registered opions.
 		void validity_checker(int argc, char*argv[]);
 
-		//to the store the corresponding value of input commands obtained by the commandline
+		//to the store the corresponding value of input commands obtained by the commandline.
 		void store_as_string(int argc, char**argv);
 
 		//a map for storing command Options.
@@ -66,10 +64,6 @@ namespace cmdParser
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
-
-		//a map to store command and corresponding value in string format.
-		StorgeType ValueAsString;
-
 	};
 };
 #endif PARSER_H
