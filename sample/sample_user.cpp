@@ -10,8 +10,11 @@ int  main(int argc, char*argv[])
 		obj.AddOptions("", "find", "short description ", "very very long description");
 		obj.AddOptions("D", "", "short description ", "very very long description");
 		obj.AddOptions("IP", "", "short description ", "very very long description");
+		obj.AddOptions("f", "", "force operation ", "e.g. git checkout -f feature/branch_name");
+
 		obj.Parse(argc, argv);
-		//example1 for querying value for  the command.
+
+		//example 1 for querying value for  the command.
 		auto val1=obj.getValueAsString("--port");
 		for (auto x : val1)
 		{

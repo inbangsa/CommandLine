@@ -162,7 +162,7 @@ void cmdParser::Parser::validity_checker(int argc, char *argv[])
 
 	for (int i = 0; i < argc; i++)
 	{
-		if (strcmp(argv[i],"--help")==0 && strcmp(argv[i],"-h")==0)
+		if (!(strcmp(argv[i],"--help")==0 || strcmp(argv[i],"-h")==0))
 		{
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
@@ -171,7 +171,7 @@ void cmdParser::Parser::validity_checker(int argc, char *argv[])
 				getline(ss, temp, '=');
 				if (command_list.find(temp) == command_list.end())
 				{
-					throw std::exception("Entered command not found in the registered command list.");
+					throw std::exception(("Entered command "+temp +" not found in the registered command list.").c_str());
 				}
 
 				//to conider only the last command for verification among all the same commands present in command line with registered options.		
@@ -204,13 +204,13 @@ void cmdParser::Parser::store_as_string(int argc, char**argv)
 				std::string val = temp.substr(temp.find("=") + 1);
 
 				//to remove the old value for already existing key.
-				if (ValueAsString.find(key) != ValueAsString.end())
+				if (command_list.find(key) != command_list.end())
 				{
-					ValueAsString.erase(key);
+					command_list.at(key)->clear_the_value();
 				}
 
 				//store for the case --copy=123 so key= --copy and val=123.
-				ValueAsString[key].push_back(val);
+				command_list[key]->set_value(val);
 			}
 			//if  only key is there.Example  -cp 142 no '='.
 			else
@@ -221,26 +221,43 @@ void cmdParser::Parser::store_as_string(int argc, char**argv)
 		//for only data no key. --copy 152 123 25 store such values 152 123 25.
 		else
 		{
-			ValueAsString[key].push_back(argv[i]);
+			command_list[key]->set_value(argv[i]);
 		}
-		if (ValueAsString.find(key) == ValueAsString.end())
+		if (command_list[key]->get_value().empty())
 		{
 			//std::cout << "key is here:" << key;
-			ValueAsString[key].push_back("true");
+			command_list[key]->set_value("true");
 		}
 	}
 }
 
 std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string &  input)const
-{
-	if (ValueAsString.find(input) != ValueAsString.end())
+{ 
+	//retrive value if the input key is found in command list.
+	if (command_list.find(input) != command_list.end())
 	{
-		return ValueAsString.at(input);
+		// demanding value for command for which user has not given any value from commandline.(later we will set it to default).
+		if (command_list.at(input)->get_value().empty())
+		{
+			std::string exception_string = "The value for " + input + " is registred but no value recieved by command line .!";
+			throw std::exception(exception_string.c_str());
+		}
+		else
+		{
+			return command_list.at(input)->get_value();
+		}
 	}
+	//if asking for the value of command which is not registered yet .
 	else
 	{
-		throw std::exception("The value of quried command not found . ! ");
+		throw std::exception(("The value of quried command "+input+" not found.!").c_str());
 	}
 }
+
+
+
+
+
+
 	
 
