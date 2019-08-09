@@ -16,12 +16,14 @@ int  main(int argc, char*argv[])
 
 		//example 1 for querying value for  the command.
 		auto val1=obj.getValueAsString("--port");
+		std::cout << "\n --port : ";
 		for (auto x : val1)
 		{
 			std::cout <<" "<< x << " ";
 		}
 		//example 2 for querying value for  the command.
 		auto val2 = obj.getValueAsString("--copy");
+		std::cout << "\n --copy : ";
 		for (auto x : val2)
 		{
 			std::cout << " " << x << " ";

@@ -1,7 +1,7 @@
 #include "Options.h" 
 
 cmdParser::Options::Options(std::string short_command, std::string long_command,
-std::string short_description, std::string long_description)
+std::string short_description, std::string long_description, std::string default_Value)
  :long_description(long_description),short_description(short_description)
  {
 	 set_option_short_command(short_command);
@@ -43,4 +43,20 @@ std::string cmdParser::Options::get_option_short_description()const
 std::string cmdParser::Options::get_option_long_description()const 
 { 
 	return long_description;
+}
+
+void cmdParser::Options::clear_the_value()
+{
+	value.clear();
+}
+
+std::vector<std::string> cmdParser::Options::get_value()const
+{
+	return value;
+}
+
+void cmdParser::Options::set_value(const std::string &input)
+{
+	value.push_back(input);
+
 }
