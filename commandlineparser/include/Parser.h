@@ -53,11 +53,8 @@ namespace cmdParser
 		//to print the common portion in the help option and std::function to print various types of help.
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
-		// to validate the input commands with the registered opions.
-		void validity_checker(int argc, char*argv[]);
-
 		//to the store the corresponding value of input commands obtained by the commandline.
-		void store_as_string(int argc, char**argv);
+		void extract_value_as_string(int argc, char**argv);
 
 		//a map for storing command Options.
 		CommandList command_list;
