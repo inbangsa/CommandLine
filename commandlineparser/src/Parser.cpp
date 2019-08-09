@@ -74,7 +74,6 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
-
 	return true;
 
 }
@@ -144,7 +143,6 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 	print(keys, print_long_help,"Long_Description");
 }
 
-
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 {
 	//for identifying key from commandline and val is only for storing value  for the case --copy=45 =>here val=45.
@@ -200,4 +198,3 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 		}
 	}
-

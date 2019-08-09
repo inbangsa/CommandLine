@@ -6,6 +6,7 @@
 #include <vector>
 #include<type_traits>
 
+
 //This class stores the values of various command options 
 namespace cmdParser
 {
