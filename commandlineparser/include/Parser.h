@@ -56,9 +56,11 @@ namespace cmdParser
 
 		//to the store the corresponding value of input commands obtained by the commandline.
 		void extract_value_as_string(int argc, char**argv);
+
 		
 		// to use the object of CommandParser::Options type in the Addoptions().
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
+
 
 		//a map for storing command Options.
 		CommandList command_list;

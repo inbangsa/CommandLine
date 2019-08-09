@@ -73,8 +73,7 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
-	
-	
+		
 	extract_value_as_string(argc,argv);	
 
 return true;
@@ -144,6 +143,7 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 }
 
 
+
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 {
 	//for identifying key from commandline and val is only for storing value  for the case --copy=45 =>here val=45.
@@ -153,11 +153,13 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 	{
 
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
+
 		{
 			//key finding  + validity checking + value next to delimiter"=" block. 
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
 				std::string temp(argv[i]);
+
 
 				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
@@ -169,6 +171,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				//if  only key is there.Example  -cp 142 no '='.
 				else
 
+
 				{
 					key = argv[i];
 				}
@@ -178,7 +181,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				{
 					throw std::exception(("Entered command [ " + key + " ] not found in the registered command list.").c_str());
 				}
-<<<<<<< HEAD
 
 				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
 				command_list[key]->clear_the_value();
@@ -190,7 +192,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 					command_list[key]->set_value(val);
 					val.clear();
 				}
-<<<<<<< HEAD
 			}
 
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
@@ -201,3 +202,4 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
+
