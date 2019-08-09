@@ -44,14 +44,12 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	//begin of tokenizer.
 	tokenizer(argc, argv);
 
-
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
 	if (argc == 1)
 	{
 		default_help(keys);
 	}
-
 
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
@@ -150,7 +148,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 	std::string key, val;
 
 	for (int i = 1; i < argc; i++)
-
 	{
 
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
@@ -160,7 +157,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
 				std::string temp(argv[i]);
-
 
 				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
