@@ -78,6 +78,10 @@ namespace cmdParser
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
+<<<<<<< HEAD
+=======
+
+>>>>>>> [#24]implmented validity check for input commnad and store corresponding value to it.
 	};
 
 	template <typename T>

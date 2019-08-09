@@ -210,5 +210,3 @@ std::string cmdParser::Parser::valid_command_maker(const std::string & input)
 	}
 	else return "";
 }
-	
-
