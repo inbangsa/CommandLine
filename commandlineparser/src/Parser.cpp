@@ -26,10 +26,10 @@ void cmdParser::Parser::AddOptions(std::string short_command,std::string long_co
 
 void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 {
-	// to store the stringstream ss till delimiter =
+	// to store the stringstream ss till delimiter =.
 	std::string  intermediate;
 
-	//for tokenizing the input string
+	//for tokenizing the input string.
 	for (int i = 0; i < argc; i++)
 	{
 		std::stringstream ss(argv[i]);
