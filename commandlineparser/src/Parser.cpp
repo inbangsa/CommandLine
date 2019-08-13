@@ -151,7 +151,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
 				std::string temp(argv[i]);
-				
+		
 				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
 				if (found != std::string::npos)
@@ -193,15 +193,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string &  input)const
 { 
-	//retrive value if the input key is found in command list.
-	if (command_list.find(input) != command_list.end())
-	{
-		return command_list.at(input)->get_value();
-	}
-	else
-	{
-		std::string exception_string = "The value for [ " + input + " ] is registred but no value recieved by command line .!";
-		throw std::exception(exception_string.c_str());
-	}
+	return command_list.at(input)->get_value();
 }
 
