@@ -52,7 +52,14 @@ void cmdParser::Options::clear_the_value()
 
 std::vector<std::string> cmdParser::Options::get_value()const
 {
-	return value;
+	if (!value.empty())
+	{
+		return value;
+	}
+	else 
+	{
+		throw std::exception("The value is empty. ! ");
+	}
 }
 
 void cmdParser::Options::set_value(const std::string &input)
