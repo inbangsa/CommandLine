@@ -39,6 +39,7 @@ std::string cmdParser::Options::get_option_long_description()const
 
 void cmdParser::Options::set_value(std::string &input)
 {
+
 }
 
  void cmdParser::Options::clear_the_value() 
