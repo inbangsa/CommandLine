@@ -156,51 +156,46 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 }
 
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
-{ 
-	std::string key;
+{
+	//for identifying key from commandline and val is only for storing value  for the case --copy=45 =>here val=45.
+	std::string key,val;
+
 	for (int i = 1; i < argc; i++)
 	{
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)&&(!(strcmp(argv[i-1], "--help") == 0 || strcmp(argv[i-1], "-h") == 0)))
 		{
+	       //key finding  + validity checking + value next to delimiter"=" block. 
 			if (argv[i][0] == '-' || argv[i][1] == '-')
 			{
 				std::string temp(argv[i]);
+				
+				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
 				if (found != std::string::npos)
 				{
 					key = temp.substr(0, found);
-					std::string val = temp.substr(temp.find("=") + 1);
-
-					//validity checking block.
-					if (command_list.find(key) == command_list.end())
-					{
-						throw std::exception(("Entered command [ " + key + " ] not found in the registered command list.").c_str());
-					}
-					else
-					//to remove the old value for already existing key.
-					{
-						command_list.at(key)->clear_the_value();
-					}
-
-					//store for the case --copy=123 so key= --copy and val=123.
-					command_list[key]->set_value(val);
+					val = temp.substr(temp.find("=") + 1);
 				}
-
 				//if  only key is there.Example  -cp 142 no '='.
 				else
 				{
 					key = argv[i];
+				}
+			
+				//validity check for the key. 
+				if (command_list.find(key) == command_list.end())
+				{
+					throw std::exception(("Entered command [ " + key + " ] not found in the registered command list.").c_str());
+				}
+
+				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
+				command_list[key]->clear_the_value();
 				
-					//validity checking block for the new key found.
-					if (command_list.find(key) == command_list.end())
-					{
-						throw std::exception(("Entered command [ " + temp + " ] not found in the registered command list.").c_str());
-					}
-					else
-					//remove the old value for already existing key.
-					{
-						command_list.at(key)->clear_the_value();
-					}
+				//store value for the case --copy=123 so key= --copy and val=123.
+				if (!val.empty())
+				{
+					command_list[key]->set_value(val);
+					val.clear();
 				}
 			}
 
@@ -218,21 +213,12 @@ std::vector <std::string> cmdParser::Parser::getValueAsString(const std::string 
 	//retrive value if the input key is found in command list.
 	if (command_list.find(input) != command_list.end())
 	{
-		// demanding value for command for which user has not given any value from commandline.(later we will set it to default).
-		if (command_list.at(input)->get_value().empty())
-		{
-			std::string exception_string = "The value for [ " + input + " ]is registred but no value recieved by command line .!";
-			throw std::exception(exception_string.c_str());
-		}
-		else
-		{
-			return command_list.at(input)->get_value();
-		}
+		return command_list.at(input)->get_value();
 	}
-	//if asking for the value of command which is not registered yet .
 	else
 	{
-		throw std::exception(("The value of quried command [ "+input+" ]not found.!").c_str());
+		std::string exception_string = "The value for [ " + input + " ] is registred but no value recieved by command line .!";
+		throw std::exception(exception_string.c_str());
 	}
 }
 
