@@ -1,12 +1,13 @@
 #include "Options.h" 
-
-cmdParser::Options::Options(std::string short_command, std::string long_command,
-std::string short_description, std::string long_description)
- :long_description(long_description),short_description(short_description)
- {
-	 set_option_short_command(short_command);
-	 set_option_long_command(long_command);
- }
+//template<typename T>
+//cmdParser::Options::Options(std::string short_command, std::string long_command,
+//std::string short_description, std::string long_description, T default_Value )
+// :long_description(long_description),short_description(short_description),
+// {
+//	 set_option_short_command(short_command);
+//	 set_option_long_command(long_command);
+//	 set_value(default_Value);
+// }
 
 void cmdParser::Options::set_option_short_command(std::string short_command)
 {
@@ -44,3 +45,4 @@ std::string cmdParser::Options::get_option_long_description()const
 { 
 	return long_description;
 }
+
