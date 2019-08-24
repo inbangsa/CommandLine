@@ -26,13 +26,15 @@ namespace cmdParser
 	{
 	public:
 		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
-		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description);
+		template<typename T>
+		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description, T def_value);
 
 		//parses_the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
 
 		//to get the string type value of the queried command.
-		std::vector<std::string> getValueAsString(const std::string &)const;
+		template<typename U>
+		std::vector<U>getValueAsString(const std::string &)const;
 
 	private:
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
@@ -62,6 +64,48 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 	};
+
+	template <typename T>
+	void cmdParser::Parser::AddOptions(std::string short_command, std::string long_command, std::string short_description, std::string long_description, T def_value)
+	{
+		static_assert(!std::is_convertible<T, const char *>::value, "const char * data type for string literal is not supported in this version !");
+		
+		std::shared_ptr<cmdParser::Options> obj = std::make_shared <cmdParser::Options_with_value<T>>(short_command, long_command, short_description, long_description, def_value);
+
+		bool is_short_empty = false;
+
+		if (!(obj->get_option_short_command().empty()))
+		{
+			command_list.insert(KeyValue(obj->get_option_short_command(), obj));
+		}
+		else
+		{
+			is_short_empty = true;
+		}
+		if (!(obj->get_option_long_command().empty()))
+		{
+			command_list.insert(KeyValue(obj->get_option_long_command(), obj));
+		}
+		else if (is_short_empty)
+		{
+			throw std::exception("Enter a valid short or long command or both.");
+		}
+	}
+
+	template<typename U>
+	std::vector <U> cmdParser::Parser::getValueAsString(const std::string & input) const
+	{
+		auto ptr = dynamic_cast<Options_with_value<U>*>(command_list.at(input).get());
+
+		if (ptr != nullptr)
+		{
+			return ptr->get_value();
+		}
+		else
+		{
+			throw std::exception(std::string(std::string("Type mismatch for input argument ") + input).c_str());
+		}
+	}
 };
 #endif PARSER_H
 
