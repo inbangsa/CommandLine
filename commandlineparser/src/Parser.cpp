@@ -116,7 +116,9 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 		std::cout<< "\n" <<itr->get_option_short_command()<< "\t\t" <<itr->get_option_long_command()<< "\t\t" << itr->get_option_short_description()<< "\t\t"<<itr->get_option_long_description()<<std::endl;
 	};
 	
+
  	print(keys, print_default_help, "Short_Description \t\t Long_Description");
+
 }
 
 
