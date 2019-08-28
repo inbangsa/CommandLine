@@ -14,9 +14,9 @@ else(WIN32)
 endif(WIN32)
 
 # setting relative paths for the install the directory
-set(_include include)
-set(_lib lib)
-set(_bin bin)
+set(_include include/${CMAKE_BUILD_TYPE})
+set(_lib lib/${CMAKE_BUILD_TYPE})
+set(_bin bin/${CMAKE_BUILD_TYPE})
 
 
 #adding the directory of sample application and library  
