@@ -1,5 +1,27 @@
 #include "Parser.h"
 
+void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
+{
+	bool is_short_empty = false;
+
+	if (!(obj->get_option_short_command().empty()))
+	{
+		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
+	}
+	else
+	{
+		is_short_empty = true;
+	}
+	if (!(obj->get_option_long_command().empty()))
+	{
+		command_list.insert(KeyValue(obj->get_option_long_command(), obj));
+	}
+	else if (is_short_empty)
+	{
+		throw std::exception("Enter a valid short or long command or both.");
+	}
+}
+
 void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 {
 	// to store the stringstream ss till delimiter =.
