@@ -43,32 +43,31 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 
 bool cmdParser::Parser::Parse(int argc,char* argv[])
 {
+	//begin of tokenizer.
 	tokenizer(argc,argv);
 	
 	std::vector<std::string> keys = help_qualifier_keys_finder();
-	
+
 	if (argc == 1)
 	{
 		default_help(keys);
-		//To terminate the program.
-		std::exit(0);
 	}
-	
-	auto detect_minus_h=std::find(tokenized_data.begin(), tokenized_data.end(), "-h");
-	auto detect_minus_minus_help = std::find(tokenized_data.begin(), tokenized_data.end(), "--help");
 
-	if (detect_minus_minus_help != tokenized_data.end())
+	// display short and long help.
+	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
 	{
-		long_help(keys);
-		//To terminate the program.
-		std::exit(0);
-	}
-	else if (detect_minus_h != tokenized_data.end())
-	{
-		short_help(keys);
-		//To terminate the program.
-		std::exit(0);
-	}
+		
+		auto detect_help_option = std::find(tokenized_data.begin(), tokenized_data.end(), option);
+
+		if (detect_help_option != tokenized_data.end())
+		{
+			help_function(keys);
+		}
+	};
+
+	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
+	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
+
 	return true;
 }
 
@@ -89,53 +88,47 @@ std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
 	return help_keys;
 }
 
-void cmdParser::Parser::default_help(std::vector<std::string>& keys)const
+void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const
 {
 	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
 	std::cout << "[FORMAT]" << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << "Short_Description" << "\t\t" << "Long_Description" << std::endl;
+	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << title << std::endl;
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	
-	auto print = [&](const std::string target_key) 
-	{     
+	for_each(keys.begin(), keys.end(), print_help);
+}
+
+void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
+{
+	auto print_default_help = [&](const std::string target_key)
+	{
 		auto itr = command_list.at(target_key);
+
 		std::cout<< "\n" <<itr->get_option_short_command()<< "\t\t" <<itr->get_option_long_command()<< "\t\t" << itr->get_option_short_description()<< "\t\t"<<itr->get_option_long_description()<<std::endl;
 	};
 	
-	std::for_each(keys.begin(), keys.end(), print);
+ 	print(keys, print_default_help, "Short_Description \t\t Long_Description");
 }
 
-void cmdParser::Parser::short_help(std::vector<std::string>& keys) const
+void cmdParser::Parser::short_help(const std::vector<std::string>&keys)const
 {
-	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
-	std::cout << "[FORMAT]" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Short_Command"<<"\t" << "Long_Command" << "\t" << "Short_Description" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	
 	auto print_short_help = [&](const std::string target_key)
 	{
 		auto itr = command_list.at(target_key);
 		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << std::endl;
 	};
 
-	std::for_each(keys.begin(), keys.end(), print_short_help);
+	print(keys, print_short_help,"Short_Description");
 }
 
-void cmdParser::Parser::long_help(std::vector<std::string>& keys) const
+void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 {
-	std::cout << "\n **************WELCOME TO OPTIONS OF THE LIBRARY *********************" << std::endl;
-	std::cout << "[FORMAT]" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Short_Command" << "\t" << "Long_Command" << "\t" << "Short_Description" << "\t\t" << "Long_Description" << std::endl;
-	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-
 	auto print_long_help = [&](const std::string target_key)
 	{
 		auto itr = command_list.at(target_key);
-		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_short_description() << "\t\t" << itr->get_option_long_description() << std::endl;
+		std::cout << "\n" << itr->get_option_short_command() << "\t\t" << itr->get_option_long_command() << "\t\t" << itr->get_option_long_description() << std::endl;
 	};
 
-	std::for_each(keys.begin(), keys.end(), print_long_help);
+	print(keys, print_long_help,"Long_Description");
 }
+

@@ -4,9 +4,11 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include<functional>
 #include <sstream>
 #include <map>
 #include <stdexcept>
+#include<tuple>
 #include "Options.h"
 
 namespace cmdParser
@@ -40,13 +42,16 @@ namespace cmdParser
 		std::vector<std::string> help_qualifier_keys_finder();
 		
 		//default help option.
-		void default_help(std::vector<std::string>& keys) const;
-		 
+		void default_help(const std::vector<std::string>& keys) const;
+
 		//shows short description whenever -h occurs.
-		void short_help(std::vector<std::string>& keys) const;
+		void short_help(const std::vector<std::string>&keys) const;
 
 		//shows long description whenever --help occurs.
-		void long_help(std::vector<std::string>& keys) const;
+		void long_help(const std::vector<std::string>&keys) const;
+
+		//to print the common portion in the help option and std::function to print various types of help.
+		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
 		//a map for storing command Options.
 		CommandList command_list;
