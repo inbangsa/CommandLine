@@ -68,29 +68,13 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 		}
 	};
 
-	// display short and long help.
-	auto detect_minus_minus_help = std::find(tokenized_data.begin(), tokenized_data.end(), "--help");
-
-	if (detect_minus_minus_help != tokenized_data.end())
-	{
-		long_help(keys);
-	}
-	else
-	{
-		auto detect_minus_h = std::find(tokenized_data.begin(), tokenized_data.end(), "-h");
-		if (detect_minus_h != tokenized_data.end())
-		{
-			short_help(keys);
-		}
-
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 	
-	extract_value_as_string(argc,argv);
-	
+	extract_value_as_string(argc,argv);	
 
-		return true;
-	}
+	return true;
+
 }
 std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
 {
