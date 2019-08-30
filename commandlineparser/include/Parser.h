@@ -34,8 +34,7 @@ namespace cmdParser
 		
 		//to get the string type value of the queried command.
 		template<typename U>
-		std::vector<U>GetValue(const std::string &)const;
-
+		std::vector<U>GetValue(const std::string&);
 
 		//to get the string type value of the queried command.
 		template<typename U>
@@ -70,6 +69,9 @@ namespace cmdParser
 		//a map for storing command Options.
 		CommandList command_list;
 		
+		//to make the command proper i.e. to append -- or - to the input command.
+		std::string valid_command_maker(const std::string& );
+		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 	};
@@ -80,40 +82,36 @@ namespace cmdParser
 		static_assert(!std::is_convertible<T, const char *>::value, "const char * data type for string literal is not supported in this version !");
 		std::shared_ptr<cmdParser::Options> obj = std::make_shared <cmdParser::Options_with_value<T>>(short_command, long_command, short_description, long_description, def_value);
 		add_options_object(obj);
+	}	
+
+	template<typename U>
+	std::vector <U> cmdParser::Parser::GetValue(const std::string& input)
+	{
+		std::string valid_query = valid_command_maker(input);
+		auto call = [&](std::string query_input)
+		{
+			if (!query_input.empty())
+			{
+				auto temp = dynamic_cast<Options_with_value<U>*>(command_list.at(query_input).get());
+				return  temp;
+			}
+		};
+	
+	    auto res= call(valid_query);
+		
+		if (res!=nullptr)
+		{
+			return res->get_value();
+		}
+		else 
+		{
+			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
+			throw std::exception(err_msg.c_str());
+		}
 		
 	}
 
-	template<typename U>
-	std::vector <U> cmdParser::Parser::GetValue(const std::string & input) const
-	{
-		auto ptr = dynamic_cast<Options_with_value<U>*>(command_list.at(input).get());
 
-		if (ptr != nullptr)
-		{
-			return ptr->get_value();
-		}
-		else
-		{ 
-			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
-			throw std::exception(err_msg.c_str());
-		}
-	}
-
-	template<typename U>
-	std::vector <U> cmdParser::Parser::GetValue(const std::string & input) const
-	{
-		auto ptr = dynamic_cast<Options_with_value<U>*>(command_list.at(input).get());
-
-		if (ptr != nullptr)
-		{
-			return ptr->get_value();
-		}
-		else
-		{ 
-			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
-			throw std::exception(err_msg.c_str());
-		}
-	}
 };
 #endif PARSER_H
 
