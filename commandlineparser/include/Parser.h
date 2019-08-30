@@ -40,7 +40,6 @@ namespace cmdParser
 		template<typename U>
 		std::vector<U>GetValue(const std::string &)const;
 
-
 	private:
 
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
@@ -108,7 +107,7 @@ namespace cmdParser
 		{
 			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
 			throw std::exception(err_msg.c_str());
-		}
+		}		
 	}
 };
 #endif PARSER_H

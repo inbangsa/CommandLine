@@ -10,22 +10,16 @@ int  main(int argc, char*argv[])
 	    
 		obj.Parse(argc, argv);
 
-<<<<<<< HEAD
 		auto x=obj.GetValue<std::string>("copy");
-=======
-
-		auto x=obj.GetValue<std::string>("--copy");
->>>>>>> [25]added GetValue function .
 		for (auto y : x)
 		{
 			std::cout << y;
 		}
- 
+
 		auto z=obj.GetValue<int>("port");
 		for (auto y : z)
 		{
 				std::cout << y;
-
 		}
 	}
 	catch (std::exception &e)

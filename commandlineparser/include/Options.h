@@ -5,7 +5,10 @@
 #include <string>
 #include <vector>
 #include <type_traits>
+<<<<<<< HEAD
 
+=======
+>>>>>>> [#34] appended the hypen.
 
 //This class stores the values of various command options 
 namespace cmdParser
