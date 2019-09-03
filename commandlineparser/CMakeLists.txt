@@ -31,5 +31,4 @@ install(FILES ${header_files} DESTINATION ${_include})
 install(EXPORT cmd_lib DESTINATION ${_lib})
 
 #install the <target_name>-config.cmake file 
-install(FILES cmd_lib-config.cmake DESTINATION ${_lib})
-#install(FILES cmd_lib-config.cmake DESTINATION "${_lib}/..")
+install(FILES cmd_lib-config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX})
