@@ -6,6 +6,7 @@
 #include <vector>
 #include<type_traits>
 
+
 //This class stores the values of various command options 
 namespace cmdParser
 {
@@ -25,6 +26,7 @@ namespace cmdParser
 		//setters for setting values.
 		void set_option_short_command(std::string short_command);
 		void set_option_long_command(std::string long_command);
+
 		virtual void set_value(std::string&);
 
 		//getters.
@@ -38,8 +40,10 @@ namespace cmdParser
 
 	private:
 		//different parameters of the options. 
-		std::string short_command, long_command, short_description, long_description;
+		std::string short_command,long_command,short_description,long_description,default_value;
 
+		//to store the value of command.
+		std::vector<std::string>value;
 	};
 
 	template<typename T>
