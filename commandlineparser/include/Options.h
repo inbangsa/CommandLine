@@ -5,12 +5,8 @@
 #include <string>
 #include <vector>
 #include <type_traits>
-<<<<<<< HEAD
 
-=======
->>>>>>> [#34] appended the hypen.
-
-//This class stores the values of various command options 
+//This class stores the values of various command options.
 namespace cmdParser
 {
 	//class Options stores the values of various command options.
@@ -30,13 +26,16 @@ namespace cmdParser
 		void set_option_short_command(std::string short_command);
 		void set_option_long_command(std::string long_command);
 		virtual void set_value(std::string&);
-
+		
+		//to check the type of T is bool or not ,if bool => flag, else not a flag . 
+		virtual bool check_type_is_bool();
+		
 		//getters.
 		std::string get_option_short_command()const;
 		std::string get_option_long_command()const;
 		std::string get_option_short_description()const;
 		std::string get_option_long_description()const;
-
+		
 		//to empty the container containing the values for the command.
 		virtual void clear_the_value();
 
@@ -71,7 +70,7 @@ namespace cmdParser
 			std::istringstream ss(input);
 			T num;
 			ss >> num;
-			value.push_back(num);
+			value.push_back((T)num);
 		}
 
 		//to empty the container containing the values for the command.
@@ -86,9 +85,20 @@ namespace cmdParser
 			return value;
 		}
 
+		//to check the type of T is bool or not ,if bool => flag, else not a flag . 
+		bool check_type_is_bool()
+		{
+			T num;
+			if (typeid(num).name() == typeid(bool).name())
+				return true;
+			else 
+				return false;
+		}
+	
 	private:
 		//to store the value of command.
 		std::vector<T> value;
 	};
+
 };
 #endif OPTIONS_H

@@ -150,7 +150,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 	for (int i = 1; i < argc; i++)
 	{
 		if (!(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) && (!(strcmp(argv[i - 1], "--help") == 0 || strcmp(argv[i - 1], "-h") == 0)))
-
 		{
 			//key finding  + validity checking + value next to delimiter"=" block. 
 			if (argv[i][0] == '-' || argv[i][1] == '-')
@@ -168,6 +167,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				else
 				{
 					key = argv[i];
+
 				}
 
 				//validity check for the key. 
@@ -179,6 +179,12 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				//clear  older value for the command, example --copy=4 --copy=5 => 4 should be deleted.
 				command_list[key]->clear_the_value();
 
+				//flag setting.
+				if (command_list[key]->check_type_is_bool())
+				{
+					command_list[key]->set_value(std::string("1"));
+				}
+
 				//store value for the case --copy=123 so key= --copy and val=123.
 				if (!val.empty())
 				{
@@ -187,10 +193,15 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				}
 
 			}
+<<<<<<< HEAD
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
+=======
+			//for only data no key. --copy 152 123 25 store such values 152 123 25 and flag value set.
+>>>>>>> [#35] flag setting.
 			else
 			{
 				command_list[key]->set_value(std::string(argv[i]));
+
 			}
 		}
 	}

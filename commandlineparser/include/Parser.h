@@ -32,7 +32,7 @@ namespace cmdParser
 		//parses the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
 		
-		//to get the string type value of the queried command.
+		//to get the value of the queried command.
 		template<typename U>
 		std::vector<U>GetValue(const std::string&);
 
@@ -70,7 +70,7 @@ namespace cmdParser
 		CommandList command_list;
 		
 		//to make the command proper i.e. to append -- or - to the input command.
-		std::string valid_command_maker(const std::string& );
+		std::string valid_command_maker(const std::string&);
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
@@ -84,7 +84,7 @@ namespace cmdParser
 		add_options_object(obj);
 	}	
 
-	template<typename U>
+	template<typename U >
 	std::vector <U> cmdParser::Parser::GetValue(const std::string& input)
 	{
 		std::string valid_query = valid_command_maker(input);
@@ -99,8 +99,9 @@ namespace cmdParser
 	
 	    auto res = call(valid_query);
 		
-		if (res!=nullptr)
+		if (res !=nullptr)
 		{
+			
 			return res->get_value();
 		}
 		else 
