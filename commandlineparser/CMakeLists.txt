@@ -12,7 +12,6 @@ target_include_directories(
 							cmd_lib PUBLIC
 							$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> 		 
 							$<INSTALL_INTERFACE:${_include}> 
-							$<INSTALL_INTERFACE:${_lib}> 
 						)
 					   
 #export the target of the library
@@ -28,7 +27,12 @@ PUBLIC_HEADER DESTINATION ${_include}
 install(FILES ${header_files} DESTINATION ${_include})
 
 #install the export group
-install(EXPORT cmd_lib DESTINATION ${_lib})
+install(EXPORT cmd_lib
+  FILE
+    cmd_lib.cmake
+  DESTINATION
+  "lib/cmake/cmd_lib"
+)
 
-#install the <target_name>-config.cmake file 
-install(FILES cmd_lib-config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(FILES cmd_lib-config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/cmd_lib)
+

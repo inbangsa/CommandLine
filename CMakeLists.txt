@@ -23,5 +23,5 @@ set(_lib lib/${CMAKE_BUILD_TYPE})
 set(_bin bin/${CMAKE_BUILD_TYPE})
 
 #adding the directory of sample application and library  
-add_subdirectory(sample)
 add_subdirectory(commandlineparser)
+add_subdirectory(sample)
