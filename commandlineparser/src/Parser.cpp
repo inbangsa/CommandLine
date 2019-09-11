@@ -2,9 +2,8 @@
 
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
-
 	bool is_short_empty = false;
-
+    
 	if (!(obj->get_option_short_command().empty()))
 	{
 		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
@@ -40,12 +39,10 @@ void  cmdParser::Parser::tokenizer(int argc, char* argv[])
 	}
 }
 
-
 bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
 	//begin of tokenizer.
 	tokenizer(argc, argv);
-
 
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
@@ -53,7 +50,6 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	{
 		default_help(keys);
 	}
-
 
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
@@ -70,13 +66,13 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 			return false;
 		}
 	};
-	
+
 	call_help("-h", std::bind(&cmdParser::Parser::short_help, this, std::placeholders::_1));
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
 
-return true;
+	return true;
 
 }
 std::vector<std::string> cmdParser::Parser::help_qualifier_keys_finder()
@@ -144,8 +140,6 @@ void cmdParser::Parser::long_help(const std::vector<std::string>&keys) const
 	print(keys, print_long_help,"Long_Description");
 }
 
-
-
 void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 {
 	//for identifying key from commandline and val is only for storing value  for the case --copy=45 =>here val=45.
@@ -162,7 +156,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 			{
 				std::string temp(argv[i]);
 
-
 				//getting key and val for case example --copy=445 => key= --copy and val=445.
 				size_t found = temp.find("=");
 				if (found != std::string::npos)
@@ -172,8 +165,6 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				}
 				//if  only key is there.Example  -cp 142 no '='.
 				else
-
-
 				{
 					key = argv[i];
 				}
@@ -189,11 +180,11 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 
 				//store value for the case --copy=123 so key= --copy and val=123.
 				if (!val.empty())
-
 				{
 					command_list[key]->set_value(val);
 					val.clear();
 				}
+
 			}
 
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
@@ -204,4 +195,3 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 		}
 	}
 }
-

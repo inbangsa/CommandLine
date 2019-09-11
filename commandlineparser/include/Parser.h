@@ -29,18 +29,15 @@ namespace cmdParser
 		template<typename T>
 		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description, T def_value);
 
-		//parses_the_input data and gives key value pair in  string type.
+		//parses the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
 		
 		//to get the string type value of the queried command.
 		template<typename U>
 		std::vector<U>GetValue(const std::string &)const;
 
-
-		//to get the string type value of the queried command.
-		std::vector<std::string> getValueAsString(const std::string &)const;
-
 	private:
+
 		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
 		void tokenizer(int argc,char *argv[]);
 
@@ -62,7 +59,6 @@ namespace cmdParser
 		//to the store the corresponding value of input commands obtained by the commandline.
 		void extract_value_as_string(int argc, char**argv);
 
-		
 		// to use the object of CommandParser::Options type in the Addoptions().
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
 
@@ -72,9 +68,6 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 
-		//a map to store command and corresponding value in string format.
-		StorgeType ValueAsString;
-
 	};
 
 	template <typename T>
@@ -83,7 +76,6 @@ namespace cmdParser
 		static_assert(!std::is_convertible<T, const char *>::value, "const char * data type for string literal is not supported in this version !");
 		std::shared_ptr<cmdParser::Options> obj = std::make_shared <cmdParser::Options_with_value<T>>(short_command, long_command, short_description, long_description, def_value);
 		add_options_object(obj);
-		
 	}
 
 	template<typename U>
