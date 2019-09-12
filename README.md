@@ -1,123 +1,131 @@
 # CommandLineParser
 # Introduction
-[1].CommandLineParser library adds the user defined command line options which accepts the short command,long command,short description,long description and a default value.
+- CommandLineParser library adds the user defined command line options which accepts the short command,long command,short description,long description and a default value.
 
-[2].This library parses the command line options and gives the corresponding value of a particular command.
+- This library parses the command line options and gives the corresponding value of a particular command.
 
-[3].The CommandLine Parser Library supports custom help functionality.
+- The CommandLine Parser Library supports custom help functionality.
 
-[4].The command line Options can be of the following forms :- 
-
-    --port=3132
-    --port 3132
-    -p
-    -cp
-    -p 4215
-    
-[5].Example 
-
-Register a command say port 
- 
-    obj.AddOptions("p", "port", "enter the port numbers", "port number must be of 4 digits",1234);
- 
-In  CommandPrompt
-
+- The command line Options can be of the following forms :- 
+    ```cpp
+    --long_command=value
+    --long_command value
+    -short_command=value
+    -short_command value
+    -short_command (flag)
+    --long_command (flag)
+    ```
+# Example
+- #### Register a command say port.
+    ```cpp
+    obj.Addoptions("p", "port", "enter the port numbers", "port number must be of 4 digits",1234);
+     ```
+- #### In CommandPrompt.
+    ```cpp
     SampleApp.exe --port=3241 4258
- 
- Result 
-    
-    The value for --port : 324 425
-
+    ```` 
+- #### Result.
+   ```cpp 
+    The value for port : 3248 4244
+    ```
 # Usage
-[1]. Include the library header file. 
-
+- #### Include the library header file. 
+  ```cpp
     #include "Parser.h"   
-[2]. Make an object of the class cmdParser::Parser.
- 
-    cmdParser::Parser obj;
-[3]. Register the options.
-	
-	Syntax:-
+  ```
+-  #### Make an object of the class cmdParser::Parser.
+     ```cpp
+       cmdParser::Parser obj;
+    ```
+-  #### Register the options.
+	**Syntax:-** 
+    ```cpp
 	AddOptions(std::string short_command, std::string long command,std::String short description, std::string long description, T default_value);
-    
-    Example:-
+    ```
+    **Example:-**
+    ```cpp
     obj.AddOptions("cp", "copy", "copies files ", "copies contents of file 1 to file 2. ", std::string("abc.txt"));
 	obj.AddOptions("", "port", "port number ", "enter four digits port number.",4528);
-	
-[4]. Parse the command line input.
+   ```
+- ####  Parse the command line input.
    
-    Syntax:-
+    **Syntax:-**
+    ```cpp
     Parse(int argc, char**argv);
-    
-    Example:-
+    ```    
+    **Example:-**
+    ```cpp
     obj.Parse(argc, argv);
-
-[5]. Get the return value for a command.
-  
-    Syntax:-
+    ```
+- #### Get the return value for a command.
+    **Syntax:-**
+    ```cpp
     std::vector<T>GetValue(const std:string &);
-  
-    Example:-
+    ```  
+    **Example:-**
+    ```cpp
     auto val_=obj.GetValue<int>("port");
-
+    ```  
 # Installation
-## For Windows 
-## Part-A Requirements
-[1]. CMake v3.9.1
-[2]. Visual Studio Community 2017 or any previous version
-[3]. Git for Windows or any git client (Optional)
-## Part-B Building cmd_lib
+###  For Windows 
+###  Part-A Requirements
+- CMake v3.9.1
+- Visual Studio Community 2017 or any previous version.
+- Git for Windows or any git client (Optional).
+### Part-B Building cmd_lib
 
- [1]. Setting  some of the required varibles.
+### [1]. Setting  some of the required varibles.
 
- a) Setting a Directory for building the library.
-            
+ - #### Set a directory for building the library.
+    ```cmake        
     set cmd_lib_BUILD_DIR=C:\commandlineparser
-
-b) Setting the Configuration of the build
-    
+    ```
+- #### Set the configuration of the build.
+    ```cmake
     set CONFIG=Release
-
-[2]. Creating directory for building the libraray.
-
-     mkdir %cmd_lib_BUILD_DIR%
-
-[2]. Clone the repository
-	 
-	 cd  %cmd_lib_BUILD_DIR%
-	 git clone  https://github.com/inbangsa/CommandLine.git
- 
-[3]. Build the Library  
-
-     cmake -Ax64 -DCMAKE_INSTALL_PREFIX="%cmd_lib_BUILD_DIR%\install" -L ..
-	 cmake --build . --clean-first --config %CONFIG% --target install   
-[3]. For using in other projects/library.
-
-     cmake -Ax64 -DCMAKE_INSTALL_PREFIX="%cmd_lib_BUILD_DIR%\install" -L ..
-	 cmake --build . --clean-first --config %CONFIG% --target install  
-This library has cmake build system which supports the find_package() functionlaity .
+    ```
+### [2]. Download library in the build directory.
+- ####  Create a build directory.
+    ``` cmake 
+    mkdir %cmd_lib_BUILD_DIR%
+    ```
+- ####  Clone the repository.
+    ``` cmake 
+	cd  %cmd_lib_BUILD_DIR%
+	git clone  https://github.com/inbangsa/CommandLine.git
+    ```
+### [3]. Build Library. 
+```cmake
+cmake -Ax64 -DCMAKE_INSTALL_PREFIX="%cmd_lib_BUILD_DIR%\install" -L ..
+cmake --build . --clean-first --config %CONFIG% --target install   
+```
+### [4]. For using in other projects/library.
+```cmake
+cmake -Ax64 -DCMAKE_INSTALL_PREFIX="%cmd_lib_BUILD_DIR%\install" -L ..
+cmake --build . --clean-first --config %CONFIG% --target install  
+```
+This library has cmake build system which supports the find_package() functionality .
 
 #  Help Feature
 This library has three help menus which are described below:-
+- **Default Help:-** shows the complete help menu which incorporates short command, long command , short description and long decription .This can be invoked by using <executable_name>.<extension_name> . (*Example:-*  SampleApp.exe) 
 
- [1] Default Help :- shows the complete help menu which incorporates short command, long command , short description and long decription .This can be invoked by using <executable_name>.<extension_name>  
- 
- Example  SampleApp.exe
- 
-[2]. Short Help :- Shows the help menu with short command, long command and short description. This can be invoked by -h flag.
+- **Short Help:-**  Shows the help menu with short command, long command and short description. This can be invoked by -h flag.
 
-[3].Long Help :- Shows the help menu with short command, long command and long description . This can be invoked by --help flag 
+- **Long Help:-**  Shows the help menu with short command, long command and long description . This can be invoked by --help flag .
 
 # Exceptions
- [1]. This library doesnot support the default value of type const char *. User may convert it to std::string .
+- This library doesnot support the default value of type const char *. User may convert it to std::string .
 
- [2]. Any usage of unregistered command options results in error.
+- Any usage of unregistered command options results in error.
 
- [3].Explicit instantiation of GetValue() function is a must.
+- Explicit instantiation of GetValue<type>() function is a must.
 
- [4]. All the exceptions gives error defined using what, which can be printed to see the error. 
+- All the exceptions gives error defined using what, which can be printed to see the error. 
 
 # TODO
-[1]. Passing initializer list or vector as default value.
-[2]. Support cons char * as data type for user defined options.
-[3]. GTest (Unit Testing)
+- Passing initializer list or vector as default value.
+
+- Support const char * as data type for user defined options.
+
+- GTest (Unit Testing)
