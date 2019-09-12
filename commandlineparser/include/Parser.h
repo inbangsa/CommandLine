@@ -97,7 +97,7 @@ namespace cmdParser
 			}
 		};
 	
-	    auto res= call(valid_query);
+	    auto res = call(valid_query);
 		
 		if (res!=nullptr)
 		{
@@ -108,10 +108,7 @@ namespace cmdParser
 			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
 			throw std::exception(err_msg.c_str());
 		}
-		
 	}
-
-
 };
 #endif PARSER_H
 
