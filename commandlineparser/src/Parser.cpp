@@ -3,7 +3,7 @@
 void cmdParser::Parser::add_options_object(std::shared_ptr<cmdParser::Options> obj)
 {
 	bool is_short_empty = false;
-    
+
 	if (!(obj->get_option_short_command().empty()))
 	{
 		command_list.insert(KeyValue(obj->get_option_short_command(), obj));
@@ -43,13 +43,16 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 {
 	//begin of tokenizer.
 	tokenizer(argc, argv);
-
+	
 	std::vector<std::string> keys = help_qualifier_keys_finder();
 
 	if (argc == 1)
 	{
 		default_help(keys);
 	}
+
+	// display short and long help.
+	auto detect_minus_minus_help = std::find(tokenized_data.begin(), tokenized_data.end(), "--help");
 
 	// display short and long help.
 	auto call_help = [&](std::string option, std::function<void(const std::vector<std::string>&)> help_function)
@@ -71,7 +74,6 @@ bool cmdParser::Parser::Parse(int argc, char* argv[])
 	call_help("--help", std::bind(&cmdParser::Parser::long_help, this, std::placeholders::_1));
 		
 	extract_value_as_string(argc,argv);	
-
 	return true;
 
 }
@@ -101,6 +103,7 @@ void cmdParser::Parser::print(const std::vector<std::string>&keys, std::function
 	std::cout << "-------------------------------------------------------------------------------------" << std::endl;
 
 	for_each(keys.begin(), keys.end(), print_help);
+
 }
 
 void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
@@ -112,8 +115,8 @@ void cmdParser::Parser::default_help(const std::vector<std::string>& keys)const
 		std::cout<< "\n" <<itr->get_option_short_command()<< "\t\t" <<itr->get_option_long_command()<< "\t\t" << itr->get_option_short_description()<< "\t\t"<<itr->get_option_long_description()<<std::endl;
 	};
 	
-
  	print(keys, print_default_help, "Short_Description \t\t Long_Description");
+
 
 }
 
@@ -192,6 +195,22 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 			{
 				command_list[key]->set_value(std::string(argv[i]));
 			}
+
 		}
 	}
+
+}
+
+std::string cmdParser::Parser::valid_command_maker(const std::string & input)
+{
+	if (command_list.find("-" + input) != command_list.end())
+	{
+		return ("-" + input);
+	}
+	else if (command_list.find("--" + input) != command_list.end())
+	{
+		return ("--" + input);
+
+	}
+	else return "";
 }
