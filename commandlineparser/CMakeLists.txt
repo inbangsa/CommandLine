@@ -27,12 +27,8 @@ PUBLIC_HEADER DESTINATION ${_include}
 install(FILES ${header_files} DESTINATION ${_include})
 
 #install the export group
-install(EXPORT cmd_lib
-  FILE
-    cmd_lib.cmake
-  DESTINATION
-  "lib/cmake/cmd_lib"
-)
+install(EXPORT cmd_lib FILE cmd_lib.cmake DESTINATION "lib/cmake/cmd_lib")
 
-install(FILES cmd_lib-config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/cmd_lib)
+#install the config.cmake file
+install(FILES cmd_lib-config.cmake DESTINATION "lib/cmake/cmd_lib")
 
