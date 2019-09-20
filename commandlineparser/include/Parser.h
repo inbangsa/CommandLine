@@ -31,14 +31,27 @@ namespace cmdParser
 
 		//parses the_input data and gives key value pair in  string type.
 		bool Parse(int argc,char* argv[]);
+<<<<<<< HEAD
 		
 		//to get the value of the queried command.
-		template<typename U>
-		U GetValue(const std::string&);
+=======
 
-		//to get the  value of the queried command as vetor output.
+		/**
+			* @brief to get the value of the queried command in a desired fundemental data type.
+			* @param input_command queried command
+			* @retval vector<U>
+		*/
+>>>>>>> [#40] Update with doxygen style comments.
 		template<typename U>
-		std::vector<U>GetValues(const std::string&);
+		U GetValue(const std::string& input_command);
+
+		/** 
+			* @brief to get the  value of the queried command as vetor output.
+			* @param input_command queried command
+			* @retval vector<U>
+		*/
+		template<typename U>
+		std::vector<U>GetValues(const std::string& input_command);
 
 	private:
 
@@ -75,7 +88,11 @@ namespace cmdParser
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
 		
-		//fetch  value for the command in vector form ,from  the Options class get value member function.
+		/**
+			* @brief fetch  value for the command in vector form ,from  the Options class get value member function.
+			* @param input_command queried command
+			* @retval vector<U>
+		*/
 		template<typename U>
 		std::vector<U> get_value_processing(const std::string & input);
 	};
