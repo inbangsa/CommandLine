@@ -8,7 +8,7 @@ int  main(int argc, char*argv[])
 		//Add the options.
 		obj.AddOptions("cp", "copy", "short description ", "very very long description", std::string("hello world "));
 		obj.AddOptions("", "port", "short description ", "very very long description",4528);
-		
+
 		// type is bool implies flag.
 		obj.AddOptions("f", "", "short description ", "very very long description", false);
 	
@@ -27,7 +27,7 @@ int  main(int argc, char*argv[])
 		auto z=obj.GetValue<int>("port");
 		for (auto y : z)
 		{
-				std::cout << y;
+			std::cout << y;
 		}
 
 		std::cout << "\n f : ";

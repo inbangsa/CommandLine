@@ -34,11 +34,11 @@ namespace cmdParser
 		
 		//to get the value of the queried command.
 		template<typename U>
-		std::vector<U>GetValue(const std::string&);
+		U GetValue(const std::string&);
 
-		//to get the string type value of the queried command.
+		//to get the  value of the queried command as vetor output.
 		template<typename U>
-		std::vector<U>GetValue(const std::string &)const;
+		std::vector<U>GetValues(const std::string&);
 
 	private:
 
@@ -74,6 +74,10 @@ namespace cmdParser
 		
 		//storing the tokenized data.		
 		std::vector<std::string> tokenized_data;
+		
+		//fetch  value for the command in vector form ,from  the Options class get value member function.
+		template<typename U>
+		std::vector<U> get_value_processing(const std::string & input);
 	};
 
 	template <typename T>
@@ -104,11 +108,24 @@ namespace cmdParser
 			
 			return res->get_value();
 		}
-		else 
+		else
 		{
 			std::string err_msg = " Type mismatch for input argument : " + input + " of type " + typeid(U).name();
 			throw std::exception(err_msg.c_str());
 		}		
+	}
+
+	template<typename U>
+	U cmdParser::Parser::GetValue(const std::string& input)
+	{
+		std::vector<U> temp_result = get_value_processing<U>(input);
+		return temp_result[0];
+	}
+
+	template<typename U>
+	std::vector<U> cmdParser::Parser::GetValues(const std::string& input)
+	{
+		return get_value_processing<U>(input);
 	}
 };
 #endif PARSER_H
