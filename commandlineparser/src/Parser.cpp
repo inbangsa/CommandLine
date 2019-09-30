@@ -193,11 +193,7 @@ void cmdParser::Parser::extract_value_as_string(int argc, char**argv)
 				}
 
 			}
-<<<<<<< HEAD
 			//for only data no key. --copy 152 123 25 store such values 152 123 25.
-=======
-			//for only data no key. --copy 152 123 25 store such values 152 123 25 and flag value set.
->>>>>>> [#35] flag setting.
 			else
 			{
 				command_list[key]->set_value(std::string(argv[i]));

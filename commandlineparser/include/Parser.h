@@ -9,45 +9,58 @@
 #include "Options.h"
 
 namespace cmdParser
-{
+{	/** @defgroup groupA TypeAlias
+    * TypeAlias 
+    * @{
+    */
 	using CommandList = std::map<std::string, std::shared_ptr<cmdParser::Options>>;
 	using KeyValue = std::pair<std::string, std::shared_ptr<cmdParser::Options>>;
 	using StorgeType = std::map<std::string, std::vector<std::string>>;
-	/*
-	class Parser serves the following purpose:-
-	[1]. Adds the user defined options.
-	[2]. Parses the  input commandline data.
-	[3]. Validates the commandline commands with the user defined commands.
-	[4]. Gives the typecasted value corresponding to a particular command.
-	[5]. Displays the default help.
-	[6]. Generates the help whenever "-h" or "--help" command is found.
+	/** @} */ // end of group TypeAlias
+	
+	/**
+	*  @brief Class Parser serves the following purpose:-<br>
+	[1].Adds the user defined options.<br>
+	[2].Parses the  input command line data.<br>
+	[3].Validates the command line commands with the user defined commands.<br>
+	[4].Gives the typecasted value corresponding to a particular command.<br>
+	[5].Displays the default help.<br>
+	[6].Generates help whenever "-h" or "--help" command is found .
 	*/
 	class Parser
 	{
 	public:
-		//adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
+		/**
+			* @brief Adds the user defined options like ("", "port","port number","portnumber should be  of 4 digits only").
+			* @param short_command		Shorthand Command
+			* @param long_command		Longhand Command
+			* @param short_description  Short description of the command
+			* @param long_description   Long description of the command
+			* @param def_value			Default Value for the command.
+			* @retval None		
+		*/
 		template<typename T>
 		void AddOptions(std::string short_command,std::string long_command,std::string short_description,std::string long_description, T def_value);
 
-		//parses the_input data and gives key value pair in  string type.
-		bool Parse(int argc,char* argv[]);
-<<<<<<< HEAD
-		
-		//to get the value of the queried command.
-=======
-
 		/**
-			* @brief to get the value of the queried command in a desired fundemental data type.
-			* @param input_command queried command
-			* @retval vector<U>
+			* @brief Parses the_input data and gives key-value pair in string type.
+			* @param argc Command line argumemnt count
+			* @param argv Command line data
+			* @retval NONE
 		*/
->>>>>>> [#40] Update with doxygen style comments.
+		bool Parse(int argc,char* argv[]);
+		
+		/**
+			* @brief To get the value of the queried command in a desired fundemental data type.
+			* @param input_command Queried command
+			* @retval U
+		*/
 		template<typename U>
 		U GetValue(const std::string& input_command);
 
 		/** 
-			* @brief to get the  value of the queried command as vetor output.
-			* @param input_command queried command
+			* @brief To get the  values of the queried command as vector output.
+			* @param input_command Queried command
 			* @retval vector<U>
 		*/
 		template<typename U>
@@ -55,46 +68,89 @@ namespace cmdParser
 
 	private:
 
-		//tokenizes the argv with delimiter '=' , for <space> argv does automatically. 
+		/**
+			* @brief Tokenizes the argv with delimiter '=' , for <space> argv does automatically.
+			* @param argc Command line Argumemnt count
+			* @param argv Command line Data
+			* @retval NONE
+		*/
 		void tokenizer(int argc,char *argv[]);
 
-		//to get the keys which will be used in the help option to retrive values from the command_list map.
+		/**
+			* @brief To get the keys which will be used in the help option to retrive values from the command_list map.
+		*/
 		std::vector<std::string> help_qualifier_keys_finder();
 
-		//default help option.
+		/**
+			* @brief Default help option.
+			* @param keys These are help keys -h , --help detected from the command line
+			* @retval  None
+		*/
 		void default_help(const std::vector<std::string>& keys) const;
 
-		//shows short description whenever -h occurs.
+		/**
+			* @brief Shows short description whenever -h occurs.
+			* @param keys These are help keys -h , --help detected from the command line
+			* @retval  None
+		*/
 		void short_help(const std::vector<std::string>&keys) const;
 
-		//shows long description whenever --help occurs.
+		/**
+			* @brief Shows Long description whenever --help occurs.
+			* @param keys  These are help keys -h , --help detected from the command line.
+			* @retval None
+		*/
 		void long_help(const std::vector<std::string>&keys) const;
 
-		//to print the common portion in the help option and std::function to print various types of help.
+		/**
+			* @brief To print the common portion in the help option and std::function to print various types of help.
+			* @param keys These are help keys -h , ---help detected from the command line
+			* @param print_help Lambda to print the speicific help functionality
+			* @param title Title for a particular help say Long_Description
+			* @retval None
+		*/
 		void print(const std::vector<std::string>&keys, std::function<void(const std::string target_key)> print_help, std::string title)const;
 
-		//to the store the corresponding value of input commands obtained by the commandline.
+		/**
+			* @brief To parser and store the corresponding value of input commands obtained by the commandline.
+			* @param argc Command line argumemnt count
+			* @param argv Command line data
+			* @retval None
+		*/
 		void extract_value_as_string(int argc, char**argv);
 
-		// to use the object of CommandParser::Options type in the Addoptions().
+		/**
+			* @brief To process the addition of options to the commandlist  after object creation by AddObject function.
+			* @param argc Pointer to the  object of class Option
+			* @retval None
+		*/
 	    void add_options_object(std::shared_ptr<cmdParser::Options>);
 
-		//a map for storing command Options.
-		CommandList command_list;
-		
-		//to make the command proper i.e. to append -- or - to the input command.
+		/**
+			* @brief To make the command proper i.e. to append -- or - to the input command.
+			* @param const std::string& 
+			* @retval std::string
+		*/
 		std::string valid_command_maker(const std::string&);
 		
-		//storing the tokenized data.		
-		std::vector<std::string> tokenized_data;
-		
 		/**
-			* @brief fetch  value for the command in vector form ,from  the Options class get value member function.
+			* @brief Fetch value for the command in vector form ,from  the Options class get value member function.
 			* @param input_command queried command
 			* @retval vector<U>
 		*/
 		template<typename U>
 		std::vector<U> get_value_processing(const std::string & input);
+		
+		/**
+			* @brief Storing the tokenized data.
+		*/
+		std::vector<std::string> tokenized_data;
+
+		/**
+			* @brief A map for storing command Options.
+		*/
+		CommandList command_list;
+		
 	};
 
 	template <typename T>
@@ -106,7 +162,7 @@ namespace cmdParser
 	}	
 
 	template<typename U >
-	std::vector <U> cmdParser::Parser::GetValue(const std::string& input)
+	std::vector <U> cmdParser::Parser::get_value_processing(const std::string& input)
 	{
 		std::string valid_query = valid_command_maker(input);
 		auto call = [&](std::string query_input)
