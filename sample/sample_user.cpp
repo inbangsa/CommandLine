@@ -9,32 +9,44 @@ int  main(int argc, char*argv[])
 		obj.AddOptions("cp", "copy", "short description ", "very very long description", std::string("hello world "));
 		obj.AddOptions("", "port", "short description ", "very very long description",4528);
 
-		// type is bool implies flag.
+		// Type is bool implies flag.
 		obj.AddOptions("f", "", "short description ", "very very long description", false);
 	
 		//Parse the command line arguments.
 		obj.Parse(argc, argv);
 
-
-		//retrieve the value for particular command.
+		std::cout << "=========Using GetValue=======\n";
+		//Retrieve the value for particular command.
+		std::cout << "\n copy : "<<obj.GetValue<std::string>("copy");
+		
+		std::cout << "\n port : "<<obj.GetValue<int>("port");
+		
+		std::cout << "\n f : "<<obj.GetValue<bool>("f");
+		std::cout << std::endl;
+		
+		std::cout <<"==========Using GetValues=======\n";
+		
+		//Retrieve the values for particular command.
+		
 		std::cout << "\n copy : ";
-		auto x=obj.GetValue<std::string>("copy");
-		for (auto y : x)
+		auto val_copy=obj.GetValues<std::string>("copy");
+		for (auto y : val_copy)
 		{
-			std::cout << y;
+			std::cout << y << " ";
 		}
 
-		auto z=obj.GetValue<int>("port");
-		for (auto y : z)
+		auto val_port=obj.GetValues<int>("port");
+		std::cout << "\n port : ";
+		for (auto y : val_port)
 		{
-			std::cout << y;
+			std::cout << y<<" ";
 		}
 
 		std::cout << "\n f : ";
-		auto k = obj.GetValue<bool>("f");
-		for (auto y :k )
+		auto val_flag = obj.GetValues<bool>("f");
+		for (auto y :val_flag)
 		{
-			std::cout << y;
+			std::cout << y <<" ";
 		}
 		std::cout << std::endl;
 	}
