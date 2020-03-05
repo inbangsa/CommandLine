@@ -1,7 +1,8 @@
-#This functions sets the complier warnings
-#Additional Feature : if WARNINGS_AS_ERRORS is set to true then warnings will be treated as errors
+#This functions sets the complier warnings.
+#Additional Feature : if WARNINGS_AS_ERRORS is set to true then warnings will be treated as errors.
 
 function(set_project_warnings project_name)
+  
   option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" False)
 
   set(MSVC_WARNINGS
@@ -38,7 +39,7 @@ function(set_project_warnings project_name)
 		
   )
  	
-  #To make complier warnings as error. 
+	#To make complier warnings as error. 
 	if (${WARNINGS_AS_ERRORS})
 		set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)
 	endif()
@@ -46,9 +47,7 @@ function(set_project_warnings project_name)
 	if(MSVC)
 		set(PROJECT_WARNINGS ${MSVC_WARNINGS} )
 	endif()
-      
-
+     
   target_compile_options(${project_name} INTERFACE ${PROJECT_WARNINGS})
-
-	
+  
 endfunction()
