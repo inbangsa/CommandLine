@@ -9,9 +9,10 @@ function(enable_doxygen)
 	find_package(Doxygen)
 	
 	if(DOXYGEN_FOUND)	
-
+			
 			#setting required varibles for the doxygen file generation before the doxygen_add_docs command
 			file(MAKE_DIRECTORY docs/doxygendocuments)
+			
 			set(DOXYGEN_EXTRACT_ALL NO)
 			set(DOXYGEN_PROJECT_NAME ${PROJECT_NAME})
  			set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/doxygendocuments)
@@ -24,9 +25,7 @@ function(enable_doxygen)
 			set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ${PROJECT_SOURCE_DIR}/README.md)
 
 			#doxygen_add_docs creates a custom target doxygen-docs 
-			doxygen_add_docs(run_doxygen ${PROJECT_SOURCE_DIR}/commandlineparser/include ${PROJECT_SOURCE_DIR}/README.md
-			WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doxygen
-			)     
+			doxygen_add_docs(run_doxygen ${PROJECT_SOURCE_DIR}/commandlineparser/include ${PROJECT_SOURCE_DIR}/README.md)
 			
 			#install doxygen files
 			INSTALL(FILES ${PROJECT_SOURCE_DIR}/docs/doxygendocuments/html/cmd_lib.chm DESTINATION docs/doxygendocuments)
