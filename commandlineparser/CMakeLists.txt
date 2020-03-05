@@ -32,9 +32,6 @@ install(EXPORT cmd_lib FILE cmd_lib.cmake DESTINATION "lib/cmake/cmd_lib")
 #install the config.cmake file
 install(FILES cmd_lib-config.cmake DESTINATION "lib/cmake/cmd_lib")
 
-#install doxygen files
-install(FILES ../docs/html/index.html ../docs/html/cmd_lib.chm DESTINATION docs)
 
-install(FILES ../docs/html/index.html ../docs/html/cmd_lib.chm DESTINATION ../docs/doxygendocuments)
 
 

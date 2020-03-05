@@ -1,21 +1,19 @@
 cmake_minimum_required(VERSION 3.4)
+
 project(command_line_parser)
 
-# global compiler flags
+#set complier varibles/specifications
+include(cmake/standardprojectsettings.cmake)
 
-set(CMAKE_CXX_EXTENSIONS OFF) # OFF -> -std=c++14, ON -> -std=gnu++14
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED true)
+#This lib has  no location and has to be linked for the enforcing complier warnings
+add_library(project_warnings INTERFACE)
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
+#complier warnings management.
+include(cmake/compilerwarnings.cmake)
+set_project_warnings(project_warnings)
 
-if(WIN32)
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-else(WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-literal-suffix -s")
-endif(WIN32)
+#static analysis of code
+include(cmake/staticanalyzer.cmake)
 
 # setting relative paths for the install the directory
 set(_include include)
@@ -25,3 +23,8 @@ set(_bin bin/${CMAKE_BUILD_TYPE})
 #adding the directory of sample application and library  
 add_subdirectory(commandlineparser)
 add_subdirectory(sample)
+
+# to generate doxygen documents
+include(cmake/doxygen.cmake)
+enable_doxygen()
+
